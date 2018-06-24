@@ -1,0 +1,16 @@
+self-balancing-robot\data_builder.o: ..\Src\MPU6050\mllite\data_builder.c
+self-balancing-robot\data_builder.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+self-balancing-robot\data_builder.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+self-balancing-robot\data_builder.o: ..\Src\MPU6050\mllite\ml_math_func.h
+self-balancing-robot\data_builder.o: ..\Src\MPU6050\driver\include\mltypes.h
+self-balancing-robot\data_builder.o: ..\Src\MPU6050\driver\include\stdint_invensense.h
+self-balancing-robot\data_builder.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+self-balancing-robot\data_builder.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\errno.h
+self-balancing-robot\data_builder.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\limits.h
+self-balancing-robot\data_builder.o: ..\Src\MPU6050\mllite\data_builder.h
+self-balancing-robot\data_builder.o: ..\Src\MPU6050\driver\include\mlmath.h
+self-balancing-robot\data_builder.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+self-balancing-robot\data_builder.o: ..\Src\MPU6050\mllite\storage_manager.h
+self-balancing-robot\data_builder.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+self-balancing-robot\data_builder.o: ..\Src\MPU6050\mllite\message_layer.h
+self-balancing-robot\data_builder.o: ..\Src\MPU6050\mllite\results_holder.h

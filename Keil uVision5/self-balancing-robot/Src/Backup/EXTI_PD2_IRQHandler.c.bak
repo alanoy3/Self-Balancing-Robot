@@ -1,0 +1,240 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <math.h>
+
+#include "stm32f0xx_hal.h"
+#include "stm32f0xx.h"
+#include "stm32f0xx_it.h"
+#include "tim.h"
+#include "override_printf_&_scanf.h"		/* printf & scanf 複寫 */
+
+
+extern void MPU6050_GET_DATA (void);					//取得 MPU6050 資料，在 MPU6050_get_data.c 中
+extern int Read_Encoder (TIM_HandleTypeDef *);		    // 取得 編碼器 資料，在 Encoder.c 中
+extern TIM_OC_InitTypeDef 	   sConfigOC;				//建立計時器 PWM 設定 結構，在 self-balancing-robot_main_Init.c 中
+
+
+#define PWM_MAX 4800-1              //PWM 最大值
+
+
+//------------------PID參數--------------
+			//重心偏移
+#define ZHONGZHI 1.63;       // 1.4
+			//平衡
+float Balance_Kp=3000,       //3000
+      Balance_Kd=10,       //8
+			//編碼器速度
+      Velocity_Kp=80,       //20
+      Velocity_Ki=0.4,        //0.8
+			//轉向
+			Kp=42,
+			Kd=0; 
+
+
+
+//遙控車子的變數
+extern float Movement ,			// 前進、後退 變數，在 self-balancing-robot_main_Init.c 中
+						 Turn_Amplitude;
+
+
+
+//在 MPU6050_get_data.c 中變數
+extern float Pitch;							//俯仰角(X軸角度)
+extern short gyro[3],						//陀螺儀角速度資料
+			 accel_short[3];				//加速計資料
+
+
+float Angle_Balance;						//X軸平衡角
+short Gyro_Balance,							//X軸平衡角速度
+	  Gyro_Turn,							//Z軸轉向角速度
+	  Acceleration_Z;						//Z軸加速度
+int Encoder_Left,						    // 左輪編碼器 計數值
+	Encoder_Right,						    // 右輪編碼器 計數值
+    Balance_Pwm,                            //車體平衡 PWM 值
+    Velocity_Pwm,                           //車體速度 PWM 值
+		Turn_Pwm,																//車體轉向 PWM 值
+    Motor_Left_PWM,                         //左輪 PWM 值
+    Motor_Right_PWM;                        //右輪 PWM 值
+
+
+
+/*--------------------------------------------------------------------------
+函數功能：直立PD控制
+輸入參數：角度、角速度
+返回 值：直立控制PWM
+----------------------------------------------------------------------------*/
+int balance(float Angle,float Gyro)
+{  
+   float Bias;
+	 int balance;
+	 Bias=Angle-ZHONGZHI;       //===求出平衡的角度中值 和机械相关
+	 balance=Balance_Kp*Bias+Gyro*Balance_Kd;   //===计算平衡控制的馬達PWM  PD控制   kp是P系数 kd是D系数 
+	 return balance;
+}
+
+
+
+
+
+/**************************************************************************
+函数功能：速度PI控制 修改前进后退速度，请修Target_Velocity，比如，改成60就比较慢了
+入口参数：左轮编码器、右轮编码器
+返回  值：速度控制PWM
+作    者：平衡小车之家
+**************************************************************************/
+int velocity(int Encoder_Left,int Encoder_Right)
+{  
+     static float Velocity,Encoder_Least,Encoder;
+	  static float Encoder_Integral,Target_Velocity;
+
+   //=============速度PI控制器=======================//	
+		Encoder_Least =(Encoder_Left+Encoder_Right)-0;                    //===获取最新速度偏差==测量速度（左右编码器之和）-目标速度（此处为零） 
+		Encoder *= 0.8;		                                                //===一阶低通滤波器       
+		Encoder += Encoder_Least*0.2;	                                    //===一阶低通滤波器    
+		Encoder_Integral +=Encoder;                                       //===积分出位移 积分时间：10ms
+		Encoder_Integral=Encoder_Integral-Movement;                       //===接收遥控器数据，控制前进后退
+		if(Encoder_Integral>20000)  	Encoder_Integral=20000;             //===积分限幅
+		if(Encoder_Integral<-20000)	    Encoder_Integral=-20000;              //===积分限幅	
+		Velocity=Encoder*Velocity_Kp+Encoder_Integral*Velocity_Ki;                          //===速度控制	
+//		if(Turn_Off(Angle_Balance,Voltage)==1||Flag_Stop==1)   Encoder_Integral=0;      //===电机关闭后清除积分
+	  return Velocity;
+}
+
+
+
+
+/**************************************************************************
+函数功能：转向控制  修改转向速度，请修改Turn_Amplitude即可
+入口参数：左轮编码器、右轮编码器、Z轴陀螺仪
+返回  值：转向控制PWM
+作    者：平衡小车之家
+**************************************************************************/
+int turn(int encoder_left,int encoder_right,float gyro)//转向控制
+{
+	 static float Turn_Target,Turn,Encoder_temp,Turn_Convert=0.9,Turn_Count;
+
+	  //=============遥控左右旋转部分=======================//
+  	if(Turn_Amplitude!=0)                      //这一部分主要是根据旋转前的速度调整速度的起始速度，增加小车的适应性
+		{
+			if(++Turn_Count==1)
+			Encoder_temp=abs(encoder_left+encoder_right);
+			Turn_Convert=50/Encoder_temp;
+			if(Turn_Convert<0.6)Turn_Convert=0.6;
+			if(Turn_Convert>3)Turn_Convert=3;
+		}	
+	  else
+		{
+			Turn_Convert=0.9;
+			Turn_Count=0;
+			Encoder_temp=0;
+		}			
+		if(Turn_Amplitude>0)	           Turn_Target-=Turn_Convert;
+		else if(Turn_Amplitude<0)	     Turn_Target+=Turn_Convert; 
+		else Turn_Target=0;
+    if(Turn_Target>Turn_Amplitude)  Turn_Target=Turn_Amplitude;    //===转向速度限幅
+	  if(Turn_Target<-Turn_Amplitude) Turn_Target=-Turn_Amplitude;
+		if( Movement != 0 )  Kd=0.5;        
+		else Kd=0;   //转向的时候取消陀螺仪的纠正 有点模糊PID的思想
+  	//=============转向PD控制器=======================//
+		Turn=-Turn_Target*Kp -gyro*Kd;                 //===结合Z轴陀螺仪进行PD控制
+	  return Turn;
+}
+
+
+
+
+
+/**************************************************************************
+函數功能：輸出PWM給馬達
+輸入參數：左輪PWM、右輪PWM
+**************************************************************************/
+void Set_Pwm(int motor_L,int motor_R)
+{
+    HAL_TIM_PWM_Stop(&htim1 ,TIM_CHANNEL_1);                    //停止 左輪 PWM
+	HAL_TIM_PWM_Stop(&htim1 ,TIM_CHANNEL_2);                    //停止 右輪 PWM
+    
+//----------- 限制 PWM 最大值 -------------------
+    if(motor_L < -PWM_MAX) motor_L = -PWM_MAX;	
+    if(motor_L >  PWM_MAX) motor_L =  PWM_MAX;	
+	if(motor_R < -PWM_MAX) motor_R = -PWM_MAX;	
+	if(motor_R >  PWM_MAX) motor_R =  PWM_MAX;	
+    
+    
+    if(motor_L<0)                                               //往後傾斜時，左輪往後走
+    {
+        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_SET);
+    }
+	else                                                        //往前傾斜時，左輪往後前
+    {
+        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET);
+    }        
+    sConfigOC.Pulse = abs(motor_L);							        //設定 脈衝寬度
+    HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1);	//將 左輪 PWM設定載入
+    
+	if(motor_R<0)
+    {
+        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_SET);
+    }
+    else
+    {
+        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);
+    }
+	sConfigOC.Pulse = abs(motor_R);							        //設定 脈衝寬度
+    HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2);	//將 右輪 PWM設定載入
+    
+    HAL_TIM_PWM_Start(&htim1 ,TIM_CHANNEL_1);						//啟動 左輪 PWM
+	HAL_TIM_PWM_Start(&htim1 ,TIM_CHANNEL_2);						//啟動 右輪 PWM
+}
+
+
+
+
+
+
+
+
+
+
+
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	switch (GPIO_Pin)
+	{
+		case GPIO_PIN_2 :
+			
+			HAL_NVIC_DisableIRQ(EXTI2_3_IRQn);		//關閉 PD2 中斷
+		
+			MPU6050_GET_DATA();						//取得 MPU6050 資料
+            
+//            printf ("Pitch=%f  \n\r " , Pitch );
+            
+			Angle_Balance=Pitch; 					//更新X軸平衡角
+			Gyro_Balance=gyro[1];					//更新X軸平衡角速度
+			Gyro_Turn=gyro[2];						//更新Z軸轉向角速度
+			Acceleration_Z=accel_short[2];			//更新Z軸加速度
+			
+			Encoder_Left=-Read_Encoder( & htim2 ); 	//讀取 左輪編碼器 計數值
+			Encoder_Right=Read_Encoder( & htim3 );  //讀取 右輪編碼器 計數值
+            
+            Balance_Pwm =balance(Angle_Balance,Gyro_Balance);   //車體平衡PID 控制
+            Velocity_Pwm=velocity(Encoder_Left,Encoder_Right);  //車體速度PID 控制
+						Turn_Pwm    =turn(Encoder_Left,Encoder_Right,Gyro_Turn);		//車體轉向PID 控制
+        
+            Motor_Left_PWM  = Balance_Pwm - Velocity_Pwm + Turn_Pwm;       //計算 左輪 PWM 值
+            Motor_Right_PWM = Balance_Pwm - Velocity_Pwm - Turn_Pwm;       //計算 右輪 PWM 值
+        
+            Set_Pwm( Motor_Left_PWM , Motor_Right_PWM );        //輸出 PWM 給馬達
+            
+		
+			HAL_NVIC_ClearPendingIRQ(EXTI2_3_IRQn);		// 清除 PD2 中斷暫存器
+			HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);			//開啟 PD2 中斷
+			
+			break;
+	}
+}
