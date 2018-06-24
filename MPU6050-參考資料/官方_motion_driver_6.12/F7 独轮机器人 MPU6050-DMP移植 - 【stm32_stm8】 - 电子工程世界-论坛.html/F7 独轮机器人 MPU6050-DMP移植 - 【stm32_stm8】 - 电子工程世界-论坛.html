@@ -1,0 +1,1994 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0048)http://bbs.eeworld.com.cn/thread-475972-1-1.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=GBK"><script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script><script src="http://hm.baidu.com/hm.js?a3fe776776ae6477620b1dd05d9286ce"></script><script src="http://hm.baidu.com/hm.js?7a7934da33d555c9e26c68553a525afa"></script><script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/push.js.下載"></script><script async="" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/50"></script><script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/shares.php" charset="utf-8"></script>
+
+<title>F7 独轮机器人 MPU6050-DMP移植 - 【stm32/stm8】 -  电子工程世界-论坛 </title>
+<link href="http://bbs.eeworld.com.cn/thread-475972-1-1.html" rel="canonical">
+<meta name="keywords" content="F7 独轮机器人 MPU6050-DMP移植">
+<meta name="description" content=" F7 独轮机器人 MPU6050-DMP移植 ,电子工程世界-论坛">
+<meta name="author" content="EEWorld Tech Dep">
+<meta name="copyright" content="EEWorld">
+<link href="http://1.eewimg.cn/favicon.ico" mce_href="http://1.eewimg.cn/favicon.ico" rel="icon" type="image/x-icon">
+<link href="http://1.eewimg.cn/favicon.ico" mce_href="http://1.eewimg.cn/favicon.ico" rel="shortcut icon" type="image/x-icon">	
+<meta name="MSSmartTagsPreventParsing" content="True">
+<meta http-equiv="MSThemeCompatible" content="Yes">
+<!--<base href="http://bbs.eeworld.com.cn/">--><base href="."><link rel="stylesheet" type="text/css" href="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/style_1_common.css"><link rel="stylesheet" type="text/css" href="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/style_1_forum_viewthread.css"><script type="text/javascript">var STYLEID = '1', STATICURL = 'static/', IMGDIR = '/static/image/common/', VERHASH = 'ZiO', charset = 'gbk', discuz_uid = '0', cookiepre = 'ABGP_7fe6_', cookiedomain = '.eeworld.com.cn', cookiepath = '/', showusercard = '1', attackevasive = '0', disallowfloat = 'newthread', creditnotice = '1|威望|分,2|芯币|枚,3|E金币|枚,4|学分|分', defaultstyle = '', REPORTURL = 'aHR0cDovL2Jicy5lZXdvcmxkLmNvbS5jbi90aHJlYWQtNDc1OTcyLTEtMS5odG1s', SITEURL = 'http://bbs.eeworld.com.cn/', JSPATH = 'static/js/', CSSPATH = 'data/cache/style_', DYNAMICURL = '';</script>
+<script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/common.js.下載" type="text/javascript"></script>
+<meta name="application-name" content="电子工程世界-论坛">
+<meta name="msapplication-tooltip" content="电子工程世界-论坛">
+<meta name="baidu-site-verification" content="wMdtnAkkLt">
+<!--百度广告代码-->
+    <script src="http://dup.baidustatic.com/js/ds.js" type="text/javascript"></script><meta name="msapplication-task" content="name=门户;action-uri=http://bbs.eeworld.com.cn/portal.php;icon-uri=http://bbs.eeworld.com.cn//static/image/common//portal.ico"><meta name="msapplication-task" content="name=论坛;action-uri=http://bbs.eeworld.com.cn;icon-uri=http://bbs.eeworld.com.cn//static/image/common//bbs.ico">
+<meta name="msapplication-task" content="name=家园;action-uri=http://home.eeworld.com.cn;icon-uri=http://bbs.eeworld.com.cn//static/image/common//home.ico"><link rel="archives" title="电子工程世界-论坛" href="http://bbs.eeworld.com.cn/archiver/">
+<script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/forum.js.下載" type="text/javascript"></script>
+<style>@charset "utf-8";
+@font-face{font-family:'nc_iconfont';src:url("//at.alicdn.com/t/font_1465353706_4784257.eot");src:url("//at.alicdn.com/t/font_1465353706_4784257.eot?#iefix") format('embedded-opentype'),url("//at.alicdn.com/t/font_1465353706_4784257.woff") format('woff'),url("//at.alicdn.com/t/font_1465353706_4784257.ttf") format('truetype'),url("//at.alicdn.com/t/font_1465353706_4784257.svg#iconfont") format('svg')}@font-face{font-family:'ncpc_iconfont';src:url("//at.alicdn.com/t/font_384029_rhzpmteb25oecdi.eot");src:url("//at.alicdn.com/t/font_384029_rhzpmteb25oecdi.eot?#iefix") format('embedded-opentype'),url("//at.alicdn.com/t/font_384029_rhzpmteb25oecdi.woff") format('woff'),url("//at.alicdn.com/t/font_384029_rhzpmteb25oecdi.ttf") format('truetype'),url("//at.alicdn.com/t/font_384029_rhzpmteb25oecdi.svg#ncpc_iconfont") format('svg')}.nc-container div#nc-loading-circle{background:transparent;width:20px;height:20px;display:inline-block;position:relative;vertical-align:middle}.nc-container div#nc-loading-circle .sk-circle{background:transparent;width:100%;height:100%;position:absolute;left:0;top:0}.nc-container #nc-loading-circle .sk-circle:before{content:'';display:block;margin:0 auto;width:15%;height:15%;background-color:#818181;border-radius:100%;-webkit-animation:sk-circleFadeDelay 1.2s infinite ease-in-out both;animation:sk-circleFadeDelay 1.2s infinite ease-in-out both}.nc-container #nc-loading-circle .sk-circle2{-webkit-transform:rotate(30deg);-ms-transform:rotate(30deg);transform:rotate(30deg)}.nc-container #nc-loading-circle .sk-circle3{-webkit-transform:rotate(60deg);-ms-transform:rotate(60deg);transform:rotate(60deg)}.nc-container #nc-loading-circle .sk-circle4{-webkit-transform:rotate(90deg);-ms-transform:rotate(90deg);transform:rotate(90deg)}.nc-container #nc-loading-circle .sk-circle5{-webkit-transform:rotate(120deg);-ms-transform:rotate(120deg);transform:rotate(120deg)}.nc-container #nc-loading-circle .sk-circle6{-webkit-transform:rotate(150deg);-ms-transform:rotate(150deg);transform:rotate(150deg)}.nc-container #nc-loading-circle .sk-circle7{-webkit-transform:rotate(180deg);-ms-transform:rotate(180deg);transform:rotate(180deg)}.nc-container #nc-loading-circle .sk-circle8{-webkit-transform:rotate(210deg);-ms-transform:rotate(210deg);transform:rotate(210deg)}.nc-container #nc-loading-circle .sk-circle9{-webkit-transform:rotate(240deg);-ms-transform:rotate(240deg);transform:rotate(240deg)}.nc-container #nc-loading-circle .sk-circle10{-webkit-transform:rotate(270deg);-ms-transform:rotate(270deg);transform:rotate(270deg)}.nc-container #nc-loading-circle .sk-circle11{-webkit-transform:rotate(300deg);-ms-transform:rotate(300deg);transform:rotate(300deg)}.nc-container #nc-loading-circle .sk-circle12{-webkit-transform:rotate(330deg);-ms-transform:rotate(330deg);transform:rotate(330deg)}.nc-container #nc-loading-circle .sk-circle2:before{-webkit-animation-delay:-1.1s;animation-delay:-1.1s}.nc-container #nc-loading-circle .sk-circle3:before{-webkit-animation-delay:-1s;animation-delay:-1s}.nc-container #nc-loading-circle .sk-circle4:before{-webkit-animation-delay:-.9s;animation-delay:-.9s}.nc-container #nc-loading-circle .sk-circle5:before{-webkit-animation-delay:-.8s;animation-delay:-.8s}.nc-container #nc-loading-circle .sk-circle6:before{-webkit-animation-delay:-.7s;animation-delay:-.7s}.nc-container #nc-loading-circle .sk-circle7:before{-webkit-animation-delay:-.6s;animation-delay:-.6s}.nc-container #nc-loading-circle .sk-circle8:before{-webkit-animation-delay:-.5s;animation-delay:-.5s}.nc-container #nc-loading-circle .sk-circle9:before{-webkit-animation-delay:-.4s;animation-delay:-.4s}.nc-container #nc-loading-circle .sk-circle10:before{-webkit-animation-delay:-.3s;animation-delay:-.3s}.nc-container #nc-loading-circle .sk-circle11:before{-webkit-animation-delay:-.2s;animation-delay:-.2s}.nc-container #nc-loading-circle .sk-circle12:before{-webkit-animation-delay:-.1s;animation-delay:-.1s}@-webkit-keyframes sk-circleFadeDelay{0%,39%,100%{opacity:0}40%{opacity:1}}@-webkit-keyframes sk-circleFadeDelay{0%,39%,100%{opacity:0}40%{opacity:1}}@keyframes sk-circleFadeDelay{0%,39%,100%{opacity:0}40%{opacity:1}}.nc-container .scale_text2 #nc-loading-circle .sk-circle:before{background-color:#fff}.nc_iconfont{font-family:"nc_iconfont";color:#ff3f08;font-size:16px;font-style:normal}.ncpc_iconfont{font-family:"ncpc_iconfont";color:#ff3f08;font-size:16px;font-style:normal}.captcha-error .icon_ban{float:left;font-size:16px;padding-right:5px;line-height:14px}.clickCaptcha_text .btn_refresh{font-style:normal;cursor:pointer;background:#fff;color:#737383}.imgCaptcha .btn_refresh{font-size:20px;cursor:pointer;background:#fff;color:#737383}.nc_voice{display:none;position:relative;margin-top:-34px;z-index:99;width:auto;height:34px;background:#fff}.omeo-code-img,.omeo-code-audio{font-size:0;text-align:left}.omeo-code-audiobox,.omeo-code-img a,.omeo-code-audio a,.omeo-code-state{display:inline-block;*display:inline;zoom:1;height:32px;vertical-align:top;font-size:12px}.omeo-code .omeo-code-refresh{background:transparent;width:32px;height:32px;font-size:20px;color:#888;text-align:center;text-decoration:none;padding-left:4px;line-height:32px}.omeo-code .omeo-switch{display:none;width:32px;height:32px;border-left:1px solid #e1e1e1;background-image:url("//g.alicdn.com/sd/ncpc/images/checkcode.png");background-repeat:no-repeat}.omeo-img-active .omeo-code-img{display:block}.omeo-img-active .omeo-code-audio{display:none}.omeo-code-img img{border:1px solid #cdcdcd;cursor:pointer}.omeo-code-img .omeo-switch{background-position:9px -41px}.omeo-audio-active .omeo-code-audio{display:block}.omeo-audio-active .omeo-code-img{display:none}.omeo-code-refresh{position:relative;left:95px}.omeo-code-audiobox{position:relative;height:30px;line-height:32px;border:1px solid #e1e1e1;text-align:center;overflow:hidden;left:100px;top:1px;width:45%;min-width:80px;background-color:#eee}.omeo-code-audiobox a{display:block;text-decoration:none;color:#06c}.omeo-code-audiobox-playing a{visibility:hidden}.omeo-code-audiobox span,.omeo-code-audiobox b{visibility:hidden;position:absolute;top:0;left:0;height:30px;font-weight:100;overflow:hidden}.omeo-code-audiobox-playing span,.omeo-code-audiobox-playing b{visibility:visible}.omeo-code-audiobox span{z-index:0;width:0;background:#186bca}.omeo-code-audiobox b{width:100%;z-index:1;text-align:left;text-indent:30px;color:#999;background:url("//g.alicdn.com/sd/ncpc/images/checkcode.png") no-repeat 14px -89px}.omeo-code-audio .omeo-switch{background-position:5px 10px}input[type=text]::-ms-clear{display:none}.omeo-box{position:relative;background-color:#fff}.omeo-code-echo{position:absolute;top:2px;left:2px}.omeo-code-echo input{padding:5px;height:18px;line-height:18px;border:1px solid #ddd;width:80px;outline:0}.omeo-code-state{height:30px;line-height:30px;text-indent:25px;white-space:nowrap;background-image:url("//g.alicdn.com/sd/ncpc/images/checkcode.png");background-repeat:no-repeat;background-position:100px 100px}.omeo-code-echo .omeo-code-state-error{width:auto;background-position:7px -193px}.omeo-code-echo .omeo-code-state-success{position:absolute;width:30px;background-position:7px -243px}.omeo-code-state{position:absolute;left:0;top:28px}.nc_voice_close{display:inline-block;position:relative;cursor:pointer;left:95px;top:0;border-left:#ddd 2px solid;padding:0 0 0 7px;background-color:#fff;font-size:20px;color:#888;line-height:32px}.nc_help{position:absolute;width:100%;height:100%;left:0;top:0;z-index:99999}.nc_help .mask{background-color:#000;opacity:.5;filter:alpha(opacity=50);width:100%;height:100%;top:0;left:0}.nc_btn_close{position:absolute;height:20px;left:500px;border-radius:20px;padding:10px 30px;background-color:#aaa;color:#fff;cursor:pointer;z-index:10}.nc_btn_close:hover{background-color:#afafaf}.nc_hand{position:absolute;width:68px;height:53px;background-image:url("//g.alicdn.com/sd/ncpc/images/hand.png");z-index:3}.nc_slide_bg{z-index:3;font-size:12px;text-align:center;color:#fff;line-height:34px}.nc_voicebtn{position:absolute;padding:0;right:-25px;font-size:23px;color:#888;cursor:pointer;line-height:34px}.nc_helpbtn{position:absolute;cursor:pointer;right:-95px;top:4px;font-size:12px;background-color:#ffb668;color:#fff;padding:4px;border-radius:2px;line-height:18px;display:none}.nc_helpbtn:before{width:0;height:0;content:"";position:absolute;left:-2px;top:6px;border-top:4px solid transparent;border-bottom:4px solid transparent;border-right:4px solid #ffb668}.nc-container .errloading{border:#faf1d5 1px solid;text-indent:3px;background-image:none;font-size:12px;width:290px;line-height:20px;padding:7px 5px 8px 5px;color:#ef9f06;}.nc-container .errloading a{color:#30a7fc}.nc_captcha_text .nc_err{float:left;text-indent:0}.button_move{transition:left .5s;-moz-transition:left .5s;-webkit-transition:left .5s;-o-transition:left .5s}.bg_move{transition:width .5s;-moz-transition:width .5s;-webkit-transition:width .5s;-o-transition:width .5s}.nc_slide_box{position:absolute}.nc_captcha_text{height:auto;line-height:20px;visibility:hidden;font-size:12px;color:#999;font-weight:normal}.nc-container .nc_captcha_img_text{width:auto;height:auto;line-height:20px;visibility:hidden;font-size:12px;color:#999;font-weight:normal;display:none;padding:0 0 10px 0;background-position:0 0;}.nc-container .nc_captcha_img_text span.nc-lang-cnt{line-height:inherit}.nc-container .imgCaptcha .nc_captcha_img_text{width:auto}.nc_captcha_img_text{height:auto;line-height:20px;visibility:hidden;font-size:12px;color:#999;font-weight:normal;display:none;padding:0 0 10px 3px;background-position:0 0}.nc-container .nc_wrapper{width:auto}.nc_scale{width:auto;height:34px;background:#e8e8e8;position:relative;margin:0;padding:0}.nc_scale.is_audio{margin-right:25px}.nc-container .nc_scale div{height:auto}.nc-container .nc_scale ul{list-style:none}.nc-container .nc_scale .btn_slide{color:#737383;background-image:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.nc-container .nc_scale span{text-align:center;width:40px;height:32px;line-height:32px;border:1px solid #ccc;position:absolute;left:0;cursor:move;background:#fff;z-index:2}.nc-container .nc_scale span.nc-lang-cnt{*line-height:34px;float:none;width:auto;height:auto;*height:34px;border:none;position:static;cursor:inherit;background:none;z-index:0;display:inline}.nc_slide_button{width:40px;height:32px;border:1px solid #ccc;position:absolute;left:0;cursor:move;background:#fff url("//g.alicdn.com/sd/ncpc/images/rt.png") no-repeat center;z-index:2}@media screen and (-ms-high-contrast:active),(-ms-high-contrast:none){.nc_scale span{height:32px}}.nc-container .nc_scale .btnok{cursor:default;background:#fff url("//g.alicdn.com/sd/ncpc/images/yes.png") no-repeat center;z-index:3}.nc-container .nc_scale .btnok2{cursor:default;font-size:20px;background:#fff url("//g.alicdn.com/sd/ncpc/images/no.png") no-repeat center;z-index:3}.nc-container .nc_scale .btn_warn{cursor:default;color:#ff3f08;line-height:34px;text-align:center;font-size:20px;background:#fff;z-index:3}.nc-container .clickCaptcha_text .btn_refresh{font-size:20px}.nc-container .clickCaptcha_text .icon_close{line-height:30px;margin-left:8px;cursor:default;color:#ff3f08;font-size:16px;float:left;margin-right:2px;background:transparent;z-index:3}.nc-container .nc_captcha_img_text .icon_close{cursor:default;color:#ff3f08;font-size:16px;float:left;margin-right:4px;background:transparent;z-index:3;line-height:18px}.nc-container .errloading .icon_warn{cursor:default;color:#ff3f08;font-size:18px;float:left;background:transparent;z-index:3}.nc-container .nc_scale .btn_ok{cursor:default;line-height:34px;text-align:center;font-size:20px;background:#fff;z-index:3;color:#76c61d}.nc-container .nc_scale .nc_ok,.nc-container .nc_scale .nc_bg{background:#7ac23c}.nc-container .nc_scale .nc_bg{position:absolute;height:100%;_height:34px;left:0;width:10px}.nc-container .nc_scale div.redbar{background:#fc461e;opacity:.5;filter:alpha(opacity=50)}.nc-container .nc_scale div.orange{background:#f00}.nc-container .nc_scale .scale_text{width:100%;height:100%;text-align:center;position:absolute;z-index:1;background:transparent;color:#9c9c9c;line-height:34px;font-size:12px;cursor:pointer}.nc-container .nc_scale .scale_text2{text-align:left;color:#fff;font-size:12px;text-indent:10px}.nc-container .nc_scale .scale_text2 b{padding-left:0;font-weight:normal}.nc-container .nc_scale .scale_text.scale_loading_text{text-align:center}.nc-container .nc_scale .imgCaptcha,.nc-container .nc_scale .clickCaptcha{display:none;overflow:hidden;border:1px solid #ccc;background:#fff;z-index:20000;}.nc-container .nc_scale .imgCaptcha p.error span,.nc-container .nc_scale .clickCaptcha p.error span{line-height:normal}.nc-container .nc_scale .imgCaptcha{height:auto}.nc-container .nc_scale .clickCaptcha{position:absolute;left:0;top:35px;height:270px;background:#fff;display:none;}.nc-container .nc_scale .clickCaptcha p.error i{color:#ff3f08;font-style:normal}.nc-container .nc_scale .clickCaptcha div{position:static;clear:both;width:100%;background:#fff;height:auto}.nc-container .nc_scale .clickCaptcha .clickCaptcha_text{height:30px;line-height:30px;font-size:12px;color:#999;}.nc-container .nc_scale .clickCaptcha .clickCaptcha_text b{font-weight:normal}.nc_btn_2{position:absolute;right:0;top:0;cursor:pointer;margin:2px 9px 0 0}.nc_iconfont.nc_btn_2{position:absolute;right:0;top:0;cursor:pointer}.nc_iconfont.nc_btn_1{position:absolute;top:10px;right:5px}.nc_btn_1{top:10px;right:10px}.scale_text i{font-style:normal;border:none;position:static;cursor:default;color:#fffc00;background:none;display:inline;width:100%}.nc-container .clickCaptcha .clickCaptcha_img{margin:0 auto;clear:both;position:relative;}.nc-container .clickCaptcha .clickCaptcha_img img{width:230px;height:230px;margin-left:10px;margin-top:5px}.nc-container .clickCaptcha .clickCaptcha_btn{margin:10px 0 0 15px;position:relative;text-align:left;}.nc-container .clickCaptcha .clickCaptcha_btn img{cursor:pointer}.nc-container .imgCaptcha{position:absolute;left:0;top:35px;height:auto;padding-bottom:15px;border:1px solid #ccc;background:#fff;}.nc-container .imgCaptcha div{position:static;width:90%;background-color:#fff}.nc-container .imgCaptcha,.nc-container .clickCaptcha{text-align:left;}.nc-container .imgCaptcha a,.nc-container .clickCaptcha a{color:#ff3f08}.nc-container .imgCaptcha .imgCaptcha_text{height:42px;line-height:42px;width:120px;background:#fff;font-size:14px;text-align:left;color:#747474;float:left;margin-left:10px;}.nc-container .imgCaptcha .imgCaptcha_text input{margin-top:5px;height:30px;line-height:30px;font-size:14px;width:90px;background:#fff}.nc-container .imgCaptcha .imgCaptcha_text input:focus{outline:none;color:#bbb}.nc-container .imgCaptcha .imgCaptcha_btn{margin:0 0 0 12px;*margin-left:0;clear:both;padding-top:5px;width:90%;}.nc-container .imgCaptcha .imgCaptcha_btn img{cursor:pointer}.nc-container .imgCaptcha .nc_scale_submit{margin:0 auto;cursor:pointer;background-color:#fc461e;width:120px;height:32px;line-height:32px;color:#fff;text-align:center}.nc-container .imgCaptcha .imgCaptcha_img{margin:4px 0 0 100px;height:40px;width:130px;overflow:hidden;cursor:pointer;}.nc-container .imgCaptcha .imgCaptcha_img img{width:130px}.nc-container .imgCaptcha .imgCaptcha_img input{border:solid 1px #ccc}.nc-lang-ar_MA,.nc-lang-ar_SA,.nc-lang-iw_HE,.nc-lang-iw_IL{text-align:right;*text-align:left;}.nc-lang-ar_MA .nc_scale .scale_text2,.nc-lang-ar_SA .nc_scale .scale_text2,.nc-lang-iw_HE .nc_scale .scale_text2,.nc-lang-iw_IL .nc_scale .scale_text2{text-align:right;}.nc-lang-ar_MA .nc_scale .scale_text2 span,.nc-lang-ar_SA .nc_scale .scale_text2 span,.nc-lang-iw_HE .nc_scale .scale_text2 span,.nc-lang-iw_IL .nc_scale .scale_text2 span{*display:inline-block;padding:0 56px 0 0}.nc-lang-ar_MA .nc_captcha_img_text,.nc-lang-ar_SA .nc_captcha_img_text,.nc-lang-iw_HE .nc_captcha_img_text,.nc-lang-iw_IL .nc_captcha_img_text{*text-align:right}.nc-lang-ar_MA span.nc-lang-cnt,.nc-lang-ar_SA span.nc-lang-cnt,.nc-lang-iw_HE span.nc-lang-cnt,.nc-lang-iw_IL span.nc-lang-cnt{text-align:right;direction:rtl}.nocaptcha span.nc-lang-cnt{float:none;height:auto;line-height:30px}.nc-container{font-size:12px;-ms-touch-action:none;touch-action:none;}.nc-container p{margin:0;padding:0;display:inline}.nc-container .scale_text.scale_text span[data-nc-lang="_startTEXT"]{display:inline-block;width:100%}.nc-container .scale_text.scale_text.slidetounlock span[data-nc-lang="_startTEXT"]{background:-webkit-gradient(linear,left top,right top,color-stop(0,#4d4d4d),color-stop(.4,#4d4d4d),color-stop(.5,#fff),color-stop(.6,#4d4d4d),color-stop(1,#4d4d4d));-webkit-background-clip:text;-webkit-text-fill-color:transparent;-webkit-animation:slidetounlock 3s infinite;-webkit-text-size-adjust:none}.nc-container .nc_scale .nc-align-center.scale_text2{text-align:center;text-indent:-42px}@-webkit-keyframes slidetounlock{0%{background-position:-200px 0}100%{background-position:200px 0}}.nc-container.tb-login .clickCaptcha_text .icon_close{line-height:30px;margin-left:0;cursor:default;color:#ff3f08;font-size:16px;float:left;margin-right:0;background:transparent;z-index:3}.nc-container.tb-login{position:relative;margin-top:20px;display:none;}.nc-container.tb-login .nc_scale{width:auto;}.nc-container.tb-login .nc_scale .scale_text2{text-indent:-42px;text-align:center;}.nc-container.tb-login .nc_scale .scale_text2 b{padding:0}.nc-container.tb-login .nc_scale.nc_err div.scale_text{background:#f79977}.nc-container.tb-login .errloading{width:auto}.nc-container.tb-login .imgCaptcha,.nc-container.tb-login .clickCaptcha{width:252px;*width:256px;border:0;*height:300px;min-height:300px;max-height:inherit !important;}.nc-container.tb-login .imgCaptcha div.login-msg.error,.nc-container.tb-login .clickCaptcha div.login-msg.error{background:#fff2f2}.nc-container.tb-login .imgCaptcha .captcha-error,.nc-container.tb-login .clickCaptcha .captcha-error{position:absolute;top:0;width:244px;height:auto;margin-bottom:15px;padding:3px;border:solid 1px #ff8e8e;line-height:18px}.nc-container.tb-login .imgCaptcha .captcha-inform,.nc-container.tb-login .clickCaptcha .captcha-inform{font-size:110%;margin-left:20px}.nc-container.tb-login .imgCaptcha{padding-top:66px;}.nc-container.tb-login .imgCaptcha .imgCaptcha_text{width:100px;margin-left:0;}.nc-container.tb-login .imgCaptcha .imgCaptcha_text input:focus{color:#000}.nc-container.tb-login .imgCaptcha .imgCaptcha_img{width:120px;_width:100px}.nc-container.tb-login .imgCaptcha .imgCaptcha_btn{width:100%;margin-left:0}.nc-container.tb-login .imgCaptcha .nc_scale_submit{width:100%;height:36px;line-height:36px;margin-top:20px;margin-left:0;border-radius:3px;font-size:16px;font-family:Tahoma,Helvetica,Arial,sans-serif;background:#ff3f08}.nc-container.tb-login .clickCaptcha{padding-top:40px;}.nc-container.tb-login .clickCaptcha .clickCaptcha_text{text-indent:4px}.nc-container.tb-login .clickCaptcha .clickCaptcha_img img{margin-left:10px}.nc-container.tb-login .nc_btn_1{top:77px;_top:57px}.nc-container.tb-login .nc_btn_2{top:36px}.login .nc-container.tb-login .login-msg p,.login-box .nc-container.tb-login .login-msg p{width:auto;float:left}.nc-container.tb-login.nc-old-login{margin:20px 0 10px 0;width:250px;}.nc-container.tb-login.nc-old-login .nc_wrapper{width:250px}.nc-container.tb-login.nc-old-login .imgCaptcha,.nc-container.tb-login.nc-old-login .clickCaptcha{width:250px;min-height:auto;}.nc-container.tb-login.nc-old-login .imgCaptcha .captcha-error,.nc-container.tb-login.nc-old-login .clickCaptcha .captcha-error{line-height:16px}.nc-container.tb-login.nc-old-login .clickCaptcha{padding-top:28px;}.nc-container.tb-login.nc-old-login .clickCaptcha .clickCaptcha_img img{width:200px;height:200px}.nc-container.nc-old-login.show-click-captcha{padding-bottom:60px}.nc-container.nc-old-login.show-click-captcha.nc-tm-min-fix{padding-bottom:40px}.nc-container.tb-login.nc-tm-min-fix .clickCaptcha{max-height:340px !important}#content .login-box .bd .nc-container.tb-login .login-msg{margin:10px auto 15px auto}#content .login-box .bd .nc-container.tb-login.nc-old-login.show-click-captcha .login-msg{margin:2px 0 0 0}.nc-container .nc_scale .nc-cc{display:none;position:absolute;left:0;top:35px;z-index:20000;width:360px;height:570px;border:1px solid #5eaef1;border-radius:4px;background:#fff;font-size:14px;line-height:18px;color:#333;}.nc-container .nc_scale .nc-cc.nc-cc-status-loading .nc-cc-btn,.nc-container .nc_scale .nc-cc.nc-cc-status-verifing .nc-cc-btn{background-color:#90c1eb}.nc-container .nc_scale .nc-cc.nc-cc-status-loading .nc-cc-btn,.nc-container .nc_scale .nc-cc.nc-cc-status-verifing .nc-cc-btn,.nc-container .nc_scale .nc-cc.nc-cc-status-loading .nc-cc-refresh,.nc-container .nc_scale .nc-cc.nc-cc-status-verifing .nc-cc-refresh{cursor:default}.nc-container .nc_scale .nc-cc.nc-cc-status-loading .nc-cc-refresh,.nc-container .nc_scale .nc-cc.nc-cc-status-verifing .nc-cc-refresh{color:#999}.nc-container .nc_scale .nc-cc a{color:#3199f4;text-decoration:none}.nc-container .nc_scale .nc-cc .nc_iconfont{vertical-align:top;margin-right:8px}.nc-container .nc_scale .nc-cc-btn{display:inline-block;*display:inline;*zoom:1;vertical-align:top;letter-spacing:normal;word-spacing:normal;width:100px;line-height:30px;text-align:center;background-color:#3199f4;color:#fff;border-radius:4px;cursor:pointer;}.nc-container .nc_scale .nc-cc-btn.nc-cc-disabled{background-color:#90c1eb;cursor:default}.nc-container .nc_scale .nc-cc-btn .nc-lang-cnt{line-height:18px}.nc-container .nc_scale .nc-cc-header{padding:20px 20px 19px 20px;height:100px;background:#f4f8fa;border-bottom:1px solid #ccc}.nc-container .nc_scale .nc-cc-img1-box{float:left;width:100px;height:100px;margin-right:16px}.nc-container .nc_scale .nc-cc-txt{overflow:hidden;*zoom:1;line-height:30px;padding-top:11px}.nc-container .nc_scale .nc-cc-img2-box{position:relative;padding:0 20px;margin-top:20px}.nc-container .nc_scale .nc-cc-items{position:absolute;left:20px;_left:0;top:0;width:320px;overflow:hidden}.nc-container .nc_scale .nc-cc-items-inner{margin-right:-20px}.nc-container .nc_scale .nc-cc-item{position:relative;display:inline-block;*display:inline;*zoom:1;vertical-align:top;letter-spacing:normal;word-spacing:normal;margin-right:10px;margin-bottom:10px;border:1px solid #ccc;width:98px;height:98px;background:url("//gtms02.alicdn.com/tps/i2/T1ty2QFNNXXXc6Yc2r-1-1.gif");}.nc-container .nc_scale .nc-cc-item:hover{border-color:#3199f4}.nc-container .nc_scale .nc-cc-item .nc_iconfont{display:none;position:absolute;right:0;bottom:0;color:#3199f4;font-size:22px;margin-right:0}.nc-container .nc_scale .nc-cc-item.nc-cc-selected .nc_iconfont{display:block}.nc-container .nc_scale .nc-cc-tip{display:none;position:absolute;left:0;bottom:60px;width:360px;line-height:18px;text-align:center;color:#eb4f38;}.nc-container .nc_scale .nc-cc-tip span{line-height:normal}.nc-container .nc_scale .nc-cc-footer{position:absolute;left:0;bottom:20px;width:360px;height:30px;line-height:30px;text-align:center;}.nc-container .nc_scale .nc-cc-footer .nc_iconfont{color:#c4cbd0}.nc-container .nc_scale .nc-cc-refresh,.nc-container .nc_scale .nc-cc-wait{position:absolute;left:20px;top:0;color:#3199f4;cursor:pointer}.nc-container .nc_scale .nc-cc-wait{display:none}.nc-container .nc_scale .nc-cc-cancel{position:absolute;right:20px;top:0;color:#3199f4;cursor:pointer;}.nc-container .nc_scale .nc-cc-cancel .nc_iconfont{position:relative;top:-1px}.nc-container .nc_scale .nc-cc-loading{margin-top:247px;text-align:center;line-height:14px}.nc-container .nc_scale .nc-cc-loading-img{display:inline-block;*display:inline;*zoom:1;vertical-align:top;letter-spacing:normal;word-spacing:normal;vertical-align:middle;background:url("//img.alicdn.com/tps/TB1OdxsKpXXXXcgXFXXXXXXXXXX-14-14.gif") no-repeat;width:14px;height:14px;position:relative;top:-1px;margin-right:9px}.nc-container .nc_scale .nc-cc-fail{position:absolute;left:50%;top:50%;width:320px;height:180px;margin-left:-160px;margin-top:-90px;background:#fff;border-radius:4px}.nc-container .nc_scale .nc-cc-fail-inner{text-align:center;padding:55px 10px 10px}.nc-container .nc_scale .nc-cc-fail-action{margin:28px 0 18px;}.nc-container .nc_scale .nc-cc-fail-action a{display:inline-block;*display:inline;*zoom:1;vertical-align:top;letter-spacing:normal;word-spacing:normal;line-height:30px;margin-left:16px}.nc-container .nc_scale .nc-cc-contact{text-align:right;color:#666;padding-right:9px}.nc-container .nc_scale .nc-cc-mask{display:none;position:absolute;left:0;top:0;width:360px;height:570px;background:rgba(0,0,0,0.3);filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#4C000000', endColorstr='#4C000000');}:root .nc-container .nc_scale .nc-cc-mask{-webkit-filter:none;filter:none}.nc-container .nc_scale .nc-cc-arrow-1,.nc-container .nc_scale .nc-cc-arrow-2{display:none;position:absolute;top:340px;border:solid transparent;height:0;width:0}.nc-container .nc_scale .nc-cc-arrow-1{border-width:16px;margin-top:-1px}.nc-container .nc_scale .nc-cc-arrow-2{border-width:15px}.nc-container .nc_scale .nc-cc-right .nc-cc-arrow-1,.nc-container .nc_scale .nc-cc-left .nc-cc-arrow-1,.nc-container .nc_scale .nc-cc-right .nc-cc-arrow-2,.nc-container .nc_scale .nc-cc-left .nc-cc-arrow-2{display:block;_display:none}.nc-container .nc_scale .nc-cc-right{left:180px;top:-339px;}.nc-container .nc_scale .nc-cc-right .nc-cc-arrow-1{border-right-color:#5eaef1;left:-32px}.nc-container .nc_scale .nc-cc-right .nc-cc-arrow-2{border-right-color:#fff;left:-30px}.nc-container .nc_scale .nc-cc-left{left:-335px;top:-339px;}.nc-container .nc_scale .nc-cc-left .nc-cc-arrow-1{border-left-color:#5eaef1;right:-32px}.nc-container .nc_scale .nc-cc-left .nc-cc-arrow-2{border-left-color:#fff;right:-30px}</style></head>
+
+<body id="nv_forum" class="pg_viewthread" onkeydown="if(event.keyCode==27) return false;"><link href="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/jiathis_counter.css" rel="stylesheet" type="text/css"><link href="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/jiathis_share.css" rel="stylesheet" type="text/css"><iframe frameborder="0" style="position: absolute; display: none; opacity: 0;" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/saved_resource.html"></iframe><div class="jiathis_style" style="position: absolute; z-index: 1000000000; display: none; top: 50%; left: 50%; overflow: auto;"></div><div class="jiathis_style" style="position: absolute; z-index: 1000000000; display: none; overflow: auto;"></div><iframe frameborder="0" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/jiathis_utility.html" style="display: none;"></iframe>
+
+    
+
+<a class="toggle_side  hidden_side " style="_position: absolute;_top:expression(documentElement.scrollTop+(documentElement.clientHeight-this.clientHeight)/2);_margin-top:0; "></a>
+
+<div id="eewleftmn" style="float:left;  width:215px;  height:100%;position:fixed;overflow-x:hidden; overflow-y:scroll;top: 0;_position: absolute;_top:expression(eval(document.documentElement.scrollTop));_height:expression(eval(document.documentElement.clientHeight));_left:0;">
+
+
+
+<link rel="stylesheet" href="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/style.css" type="text/css">
+<link rel="stylesheet" href="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/zTreeStyle.css" type="text/css">
+<script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/jquery-1.4.4.min.js.下載" type="text/javascript"></script>
+<script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/jquery.ztree.core-3.5.js.下載" type="text/javascript"></script>
+<script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/jquery.ztree.exhide-3.5.js.下載" type="text/javascript"></script>
+<script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/eew_left_menu.js.下載" type="text/javascript"></script>
+                
+
+<div class="side" style="">				  
+  <div class="user_head ">
+<h1>社区导航</h1>
+  <dl class="clearfix">
+<!-- 						<dt class="eewavatar">
+    <a href="#" target="_blank"><img   src="/static/image/common/avatar.jpg" width="80" height="80" alt="guest" /></a>
+  </dt>
+<dd>
+  <ul class="eewloginarea">
+   <li><a href="/member.php?mod=logging&amp;action=login" class="btn" target="_blank"><span>登录</span></a></li>
+<li><a href="/member.php?mod=register_eeworld.php" class="btn" target="_blank"><span>注册</span></a></li>			   
+     </ul>
+</dd> -->
+  </dl>
+  </div>
+  <div class="tree">
+<h2 class="home"><a href="http://bbs.eeworld.com.cn/forum.php">社区首页</a></h2>
+<ul class="top-links">
+  <li><a href="http://bbs.eeworld.com.cn/forum.php?mod=guide&amp;view=new">技术讨论创新帖</a></li>
+  <li><a href="http://bbs.eeworld.com.cn/forum.php?mod=guide&amp;view=newthread">全部新帖</a></li>
+  <li><a href="http://bbs.eeworld.com.cn/drycargo/">干货</a></li>
+  <li><a href="http://bbs.eeworld.com.cn/forum-208-1.html">资料区</a></li>
+  <li><a href="http://bbs.eeworld.com.cn/forum.php?mod=eeworldactivity">社区活动</a></li>
+  <li><a href="http://bbs.eeworld.com.cn/thread-336604-1-1.html">联系管理员</a></li>
+</ul>
+<form id="search_form">
+  <input id="search_input" type="text" placeholder="寻找我感兴趣的论坛" autocomplete="off">
+</form>					
+<ul id="menu" class="ztree"><li id="menu_1" class="level0" tabindex="0" hidefocus="true" treenode=""><span id="menu_1_switch" title="" class="button level0 switch noline_open" treenode_switch=""></span><a id="menu_1_a" class="level0" treenode_a="" onclick="" target="_self" style="font-weight:bold;" title="专业技术中心"><span id="menu_1_ico" title="" treenode_ico="" class="button ico_open" style=""></span><span id="menu_1_span">专业技术中心</span></a><ul id="menu_1_ul" class="level0 " style="display:block"><li id="menu_2" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_2_switch" title="" class="button level1 switch noline_close" treenode_switch=""></span><a id="menu_2_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-154-1.html" target="_self" style="" title="TI技术论坛"><span id="menu_2_ico" title="" treenode_ico="" class="button ico_close" style=""></span><span id="menu_2_span">TI技术论坛</span></a></li><li id="menu_13" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_13_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_13_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-245-1.html" target="_self" style="" title="ST MEMS 传感器技术论坛"><span id="menu_13_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_13_span">ST MEMS 传感器技术论坛</span></a></li><li id="menu_14" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_14_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_14_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-174-1.html" target="_self" style="" title="ADI参考电路"><span id="menu_14_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_14_span">ADI参考电路</span></a></li></ul></li><li id="menu_15" class="level0" tabindex="0" hidefocus="true" treenode=""><span id="menu_15_switch" title="" class="button level0 switch noline_open" treenode_switch=""></span><a id="menu_15_a" class="level0" treenode_a="" onclick="" target="_self" style="font-weight:bold;" title="电子技术交流"><span id="menu_15_ico" title="" treenode_ico="" class="button ico_open" style=""></span><span id="menu_15_span">电子技术交流</span></a><ul id="menu_15_ul" class="level0 " style="display:block"><li id="menu_16" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_16_switch" title="" class="button level1 switch noline_close" treenode_switch=""></span><a id="menu_16_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-15-1.html" target="_self" style="" title="嵌入式系统编程"><span id="menu_16_ico" title="" treenode_ico="" class="button ico_close" style=""></span><span id="menu_16_span">嵌入式系统编程</span></a></li><li id="menu_24" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_24_switch" title="" class="button level1 switch noline_close" treenode_switch=""></span><a id="menu_24_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-16-1.html" target="_self" style="" title="单片机"><span id="menu_24_ico" title="" treenode_ico="" class="button ico_close" style=""></span><span id="menu_24_span">单片机</span></a></li><li id="menu_35" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_35_switch" title="" class="button level1 switch noline_close" treenode_switch=""></span><a id="menu_35_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-12-1.html" target="_self" style="" title="FPGA/CPLD"><span id="menu_35_ico" title="" treenode_ico="" class="button ico_close" style=""></span><span id="menu_35_span">FPGA/CPLD</span></a></li><li id="menu_40" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_40_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_40_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-180-1.html" target="_self" style="" title="DSP"><span id="menu_40_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_40_span">DSP</span></a></li><li id="menu_41" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_41_switch" title="" class="button level1 switch noline_close" treenode_switch=""></span><a id="menu_41_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-28-1.html" target="_self" style="" title="模拟电子"><span id="menu_41_ico" title="" treenode_ico="" class="button ico_close" style=""></span><span id="menu_41_span">模拟电子</span></a></li><li id="menu_44" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_44_switch" title="" class="button level1 switch noline_close" treenode_switch=""></span><a id="menu_44_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-25-1.html" target="_self" style="" title="电源技术"><span id="menu_44_ico" title="" treenode_ico="" class="button ico_close" style=""></span><span id="menu_44_span">电源技术</span></a></li><li id="menu_47" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_47_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_47_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-68-1.html" target="_self" style="" title="PCB设计"><span id="menu_47_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_47_span">PCB设计</span></a></li><li id="menu_48" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_48_switch" title="" class="button level1 switch noline_close" treenode_switch=""></span><a id="menu_48_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-20-1.html" target="_self" style="" title="RF/无线"><span id="menu_48_ico" title="" treenode_ico="" class="button ico_close" style=""></span><span id="menu_48_span">RF/无线</span></a></li><li id="menu_51" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_51_switch" title="" class="button level1 switch noline_close" treenode_switch=""></span><a id="menu_51_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-148-1.html" target="_self" style="" title="综合技术交流"><span id="menu_51_ico" title="" treenode_ico="" class="button ico_close" style=""></span><span id="menu_51_span">综合技术交流</span></a></li><li id="menu_56" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_56_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_56_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-208-1.html" target="_self" style="" title="下载中心专版"><span id="menu_56_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_56_span">下载中心专版</span></a></li></ul></li><li id="menu_57" class="level0" tabindex="0" hidefocus="true" treenode=""><span id="menu_57_switch" title="" class="button level0 switch noline_open" treenode_switch=""></span><a id="menu_57_a" class="level0" treenode_a="" onclick="" target="_self" style="font-weight:bold;" title="创意与实践"><span id="menu_57_ico" title="" treenode_ico="" class="button ico_open" style=""></span><span id="menu_57_span">创意与实践</span></a><ul id="menu_57_ul" class="level0 " style="display:block"><li id="menu_58" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_58_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_58_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-57-1.html" target="_self" style="" title="电子竞赛"><span id="menu_58_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_58_span">电子竞赛</span></a></li><li id="menu_59" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_59_switch" title="" class="button level1 switch noline_close" treenode_switch=""></span><a id="menu_59_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-72-1.html" target="_self" style="" title="DIY/开源硬件专区"><span id="menu_59_ico" title="" treenode_ico="" class="button ico_close" style=""></span><span id="menu_59_span">DIY/开源硬件专区</span></a></li><li id="menu_67" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_67_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_67_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-117-1.html" target="_self" style="" title="淘e淘"><span id="menu_67_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_67_span">淘e淘</span></a></li><li id="menu_68" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_68_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_68_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-80-1.html" target="_self" style="" title="创意市集"><span id="menu_68_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_68_span">创意市集</span></a></li></ul></li><li id="menu_69" class="level0" tabindex="0" hidefocus="true" treenode=""><span id="menu_69_switch" title="" class="button level0 switch noline_open" treenode_switch=""></span><a id="menu_69_a" class="level0" treenode_a="" onclick="" target="_self" style="font-weight:bold;" title="行业应用"><span id="menu_69_ico" title="" treenode_ico="" class="button ico_open" style=""></span><span id="menu_69_span">行业应用</span></a><ul id="menu_69_ul" class="level0 " style="display:block"><li id="menu_70" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_70_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_70_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-17-1.html" target="_self" style="" title="移动便携"><span id="menu_70_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_70_span">移动便携</span></a></li><li id="menu_71" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_71_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_71_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-101-1.html" target="_self" style="" title="便携医疗电子"><span id="menu_71_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_71_span">便携医疗电子</span></a></li><li id="menu_72" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_72_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_72_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-29-1.html" target="_self" style="" title="工控电子"><span id="menu_72_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_72_span">工控电子</span></a></li><li id="menu_73" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_73_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_73_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-77-1.html" target="_self" style="" title="安防电子"><span id="menu_73_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_73_span">安防电子</span></a></li><li id="menu_74" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_74_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_74_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-18-1.html" target="_self" style="" title="汽车电子"><span id="menu_74_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_74_span">汽车电子</span></a></li></ul></li><li id="menu_75" class="level0" tabindex="0" hidefocus="true" treenode=""><span id="menu_75_switch" title="" class="button level0 switch noline_open" treenode_switch=""></span><a id="menu_75_a" class="level0" treenode_a="" onclick="" target="_self" style="font-weight:bold;" title="休息一下"><span id="menu_75_ico" title="" treenode_ico="" class="button ico_open" style=""></span><span id="menu_75_span">休息一下</span></a><ul id="menu_75_ul" class="level0 " style="display:block"><li id="menu_76" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_76_switch" title="" class="button level1 switch noline_close" treenode_switch=""></span><a id="menu_76_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-32-1.html" target="_self" style="" title="聊聊、笑笑、闹闹"><span id="menu_76_ico" title="" treenode_ico="" class="button ico_close" style=""></span><span id="menu_76_span">聊聊、笑笑、闹闹</span></a></li><li id="menu_80" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_80_switch" title="" class="button level1 switch noline_close" treenode_switch=""></span><a id="menu_80_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-198-1.html" target="_self" style="" title="工作这点儿事"><span id="menu_80_ico" title="" treenode_ico="" class="button ico_close" style=""></span><span id="menu_80_span">工作这点儿事</span></a></li><li id="menu_82" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_82_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_82_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-52-1.html" target="_self" style="" title="为我们提建议&amp;公告"><span id="menu_82_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_82_span">为我们提建议&amp;公告</span></a></li><li id="menu_83" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_83_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_83_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-218-1.html" target="_self" style="" title="EEWORLD颁奖专区"><span id="menu_83_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_83_span">EEWORLD颁奖专区</span></a></li><li id="menu_84" class="level1" tabindex="0" hidefocus="true" treenode=""><span id="menu_84_switch" title="" class="button level1 switch noline_docu" treenode_switch=""></span><a id="menu_84_a" class="level1" treenode_a="" onclick="" href="http://bbs.eeworld.com.cn/forum-41-1.html" target="_self" style="" title="信息发布"><span id="menu_84_ico" title="" treenode_ico="" class="button ico_docu" style=""></span><span id="menu_84_span">信息发布</span></a></li></ul></li></ul>
+  </div>
+</div>
+<div>&nbsp;</div>
+
+
+
+
+
+
+
+</div>
+
+    <div id="eewcontent" style="height:100%;  width:800px;padding-left:217px; ">
+
+
+
+
+
+<div id="append_parent"></div><div id="ajaxwaitid"></div>
+<div id="toptb" class="cl">
+<div class="wp">
+<div class="z"><a href="javascript:;" onclick="setHomepage(&#39;http://bbs.eeworld.com.cn/&#39;);">设为首页</a><a href="http://bbs.eeworld.com.cn/" onclick="addFavorite(this.href, &#39;电子工程世界-论坛&#39;);return false;">收藏本站</a><a href="http://www.eeworld.com.cn/" target="_blank">EEWORLD首页</a>
+<a id="cms" class="dropmenu" onmouseover="showMenu(this.id)">频道</a>
+<a target="_blank" href="http://e7.eeworld.com.cn/">E趣</a>
+<a href="http://training.eeworld.com.cn/" style="background-color:#F90477;color:#FFF;" target="_blank">EE大学堂</a>
+<a href="http://download.eeworld.com.cn/" target="_blank">下载中心</a>
+<a href="http://datasheet.eeworld.com.cn/" target="_blank">Datasheet</a>
+<a href="http://www.eeworld.com.cn/zt/" target="_blank">专题</a>
+<a href="http://bbs.eeworld.com.cn/" target="_blank">论坛</a>
+<a href="http://home.eeworld.com.cn/" target="_blank">博客</a>
+<a href="http://so.eeworld.com.cn/" target="_blank">搜索中心</a>					
+</div>
+<div class="y">
+
+          <a onclick="showWindow(&#39;login&#39;, this.href)" href="http://bbs.eeworld.com.cn/member.php?mod=logging&amp;action=login">立即登录</a>
+      <a href="http://bbs.eeworld.com.cn/member.php?mod=register_eeworld.php">注册</a>
+  <a href="http://bbs.eeworld.com.cn/connect.php?mod=login&amp;op=init&amp;referer=forum.php%3Fmod%3Dviewthread%26tid%3D475972%26extra%3Dpage%253D1%26page%3D1"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/qqlogin.png"></a>
+
+</div>
+</div>
+</div>
+
+
+
+
+<ul style="z-index: 50; top: 95.6px; display: none; left: 229.633px; position: absolute;background-color:#FFF;width: 170px;" id="cms_menu" class="popupmenu_popup_eewzc headermenu_popup">
+ <li><a target="_blank" href="http://www.eeworld.com.cn/mcu/">单片机</a></li>
+ <li><a target="_blank" href="http://www.eeworld.com.cn/IoT/">物联网</a></li>
+ <li><a target="_blank" href="http://www.eeworld.com.cn/qcdz/">汽车电子</a></li>
+ <li><a target="_blank" href="http://www.eeworld.com.cn/qrs/">嵌入式</a></li>
+ <li><a target="_blank" href="http://www.eeworld.com.cn/xfdz/">手机/便携</a></li>
+ <li><a target="_blank" href="http://www.eeworld.com.cn/mndz/">模拟电路</a></li>
+ <li><a target="_blank" href="http://www.eeworld.com.cn/szds/">数字电视</a></li>
+ <li><a target="_blank" href="http://www.eeworld.com.cn/DSP/">DSP</a></li>
+ <li><a target="_blank" href="http://www.eeworld.com.cn/wltx/">网络通信</a></li>
+ <li><a target="_blank" href="http://www.eeworld.com.cn/dygl/">电源管理</a></li>
+ <li><a target="_blank" href="http://www.eeworld.com.cn/gykz/">工业控制</a></li>
+ <li><a target="_blank" href="http://www.eeworld.com.cn/FPGA/">FPGA</a></li>
+ <li><a target="_blank" href="http://www.eeworld.com.cn/Test_and_measurement/">测试测量</a></li>
+ <li><a target="_blank" href="http://www.eeworld.com.cn/manufacture/">半导体设计/制造</a></li>
+ <li><a target="_blank" href="http://www.eeworld.com.cn/afdz/"> 安防电子</a></li>
+ <li class="nobor"><a target="_blank" href="http://www.eeworld.com.cn/MEMS/">MEMS</a></li>
+ <li><a target="_blank" href="http://www.eeworld.com.cn/medical_electronics/">医疗电子</a></li>
+</ul>	
+
+
+
+<div id="qmenu_menu" class="p_pop blk" style="display: none;">
+<div class="ptm pbw hm">
+请 <a href="javascript:;" class="xi2" onclick="lsSubmit()"><strong>登录</strong></a> 后使用快捷导航<br>没有帐号？<a href="http://bbs.eeworld.com.cn/member.php?mod=register_eeworld.php" class="xi2 xw1">注册</a>
+</div>
+<div id="fjump_menu" class="btda"></div></div><div class="wp a_h"><!-- 广告位：BBS_单片机_stm32&#47;sem8_内容页_S-A1 -->
+<script type="text/javascript">BAIDU_CLB_fillSlot("202493");</script></div><div id="hd">
+<div class="wp">
+
+<div class="hdc cl"><h2><a href="http://bbs.eeworld.com.cn/" title="电子工程世界-论坛"> <img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/bbs_logo.png"></a></h2> 
+</div>			
+
+<div id="nv" style="overflow: visible; top: 0px; left: 217px; z-index: 199; border-left-width: 0px; border-right-width: 0px; height: 41px; width: 1000px; position: fixed; opacity: 0.85;">
+<a href="javascript:;" id="qmenu" onmouseover="delayShow(this, function () {showMenu({&#39;ctrlid&#39;:&#39;qmenu&#39;,&#39;pos&#39;:&#39;34!&#39;,&#39;ctrlclass&#39;:&#39;a&#39;,&#39;duration&#39;:2});showForummenu(126);})">快捷导航</a>
+<div style="float: right;width: 82px;padding-right: 10px;position:relative;top:3px;">
+   <a target="_blank" href="http://weibo.com/eeworldchina" title="EEWORLD官方微博"><img name="sina" height="30" alt="" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/weibo38x34.jpg" id="sina"></a>
+   <a href="javascript:;"><img name="weixin" height="30" onmouseout="display(&#39;show_wx&#39;);" onmouseover="display(&#39;show_wx&#39;);" alt="" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/weixin43x34.jpg" id="weixin"></a>
+   <div style="position:absolute;z-index:10;height:180px;display:none;left:38px;" id="show_wx"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/ewm.jpg"></div>
+</div>
+<ul>
+    <li style="padding-top:5px;"><a href="http://bbs.eeworld.com.cn/"><img alt="首页" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/home.gif"></a></li><li class="a" id="mn_N9ec7"><a href="http://bbs.eeworld.com.cn/forum.php" hidefocus="true">论坛</a></li><li id="mn_Na063"><a href="http://bbs.eeworld.com.cn/forum.php?mod=guide&amp;view=newthread" hidefocus="true">查看新帖</a></li><li id="mn_N2a5f"><a href="http://bbs.eeworld.com.cn/forum.php?mod=guide&amp;view=new" hidefocus="true">最新回复</a></li><li id="mn_Ncb06" onmouseover="showMenu({&#39;ctrlid&#39;:this.id,&#39;ctrlclass&#39;:&#39;hover&#39;,&#39;duration&#39;:2})"><a href="http://bbs.eeworld.com.cn/activity.php" hidefocus="true" target="_blank">社区活动</a></li><li id="mn_Ne689"><a href="http://bbs.eeworld.com.cn/thread-336604-1-1.html" hidefocus="true" target="_blank">联系管理员</a></li><li><a href="http://bbs.eeworld.com.cn/stat/web/tongj/zero_reply.php" target="_blank" style="color:red;">消灭零回复</a></li>
+<li><a href="http://bbs.eeworld.com.cn/thread-533928-1-1.html" target="_blank">E金币兑换</a></li>
+<li style="position:relative;" id="mydrynav">
+<a href="http://bbs.eeworld.com.cn/drycargo/" title="干货" target="_blank" onclick="setDry()">干货</a><img id="have-much-dry" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/new.gif" style="position: absolute; left: 45px; top: 3px; display: block;">
+</li>					
+<script type="text/javascript">
+function setDry(){
+clearInterval(drytimer);
+$('have-much-dry').style.display = 'none';
+}
+
+var aj = Ajax();
+aj.processHandle();
+var drytimer = setInterval(function(){
+aj.get('./drycargo/forum_have_much_dry.php?rand=ZiO}',function(data,response){
+if(parseInt(response.XMLHttpRequest.responseText) >= 1){
+$('have-much-dry').style.display = 'block';
+}else{
+$('have-much-dry').style.display = 'none';
+}
+});								
+},30000);														
+</script>
+</ul>
+</div>
+<div class="p_pop h_pop" id="mn_userapp_menu" style="display: none"></div><ul class="p_pop h_pop" id="mn_Ncb06_menu" style="display: none"><li><a href="http://bbs.eeworld.com.cn/thread-511067-1-1.html" hidefocus="true">借用开发板</a></li></ul><div id="mu" class="cl">
+</div><div id="scbar" class="cl">
+
+<div style="float:left;">	
+<form id="scbar_form" method="post" autocomplete="off" onsubmit="searchFocus($(&#39;scbar_txt&#39;))" action="http://bbs.eeworld.com.cn/search.php?searchsubmit=yes" target="_blank">
+<input type="hidden" name="mod" id="scbar_mod" value="forum">
+<input type="hidden" name="formhash" value="80b728bf">
+<input type="hidden" name="srchtype" value="title">
+<input type="hidden" name="srhfid" value="126">
+<input type="hidden" name="srhlocality" value="forum::viewthread">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="scbar_icon_td"></td>
+<td class="scbar_txt_td"><input type="text" name="srchtxt" id="scbar_txt" value="请输入搜索内容" autocomplete="off" x-webkit-speech="" speech="" class=" xg1" placeholder="请输入搜索内容"></td>
+<td class="scbar_type_td"><a href="javascript:;" id="scbar_type" class="xg1" onclick="showMenu(this.id)" hidefocus="true">帖子</a></td>
+<td class="scbar_btn_td"><button type="submit" name="searchsubmit" style="width: 30px;" sc="1" class="pn pnc search-btn" value="true"><strong class="xi2">&nbsp;&nbsp;&nbsp;&nbsp;</strong></button></td>
+<td class="scbar_hot_td">
+<div id="scbar_hot">
+<a href="http://bbs.eeworld.com.cn/search.php?mod=forum&amp;adv=yes" target="_blank" style="font-weight:700;">高级搜索</a>
+<a class="bbs_fatie_btn" onclick="showWindow(&#39;nav&#39;, this.href, &#39;get&#39;, 0)" href="http://bbs.eeworld.com.cn/forum.php?mod=misc&amp;action=nav" style="color:red;font-weight:bold;"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/fatie.gif" alt="发帖" style="padding-top:11px;"></a>
+</div>
+</td>
+</tr>
+</tbody></table>
+</form>
+</div>
+<div style="float:right;">
+   <!--a href="http://www.eeworld.com.cn/huodong/201404_renew/survey.html" target="_blank"><img src="/static/image/hd/FLUKE.png" /></a-->
+</div>
+
+</div>
+<ul id="scbar_type_menu" class="p_pop" style="display: none;"><li><a href="javascript:;" rel="curforum" fid="126">本版</a></li><li><a href="javascript:;" rel="forum" class="curtype">帖子</a></li><li><a href="javascript:;" rel="blog">日志</a></li><li><a href="javascript:;" rel="user">用户</a></li></ul>
+<script type="text/javascript">
+initSearchmenu('scbar', '');
+</script>
+</div>
+</div>
+
+            <link rel="stylesheet" href="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/oculus.css">
+            <link rel="stylesheet" href="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/nc.css" disabled="">
+            <script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/nc.js.下載"></script>
+            <script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/oculus_nc.js.下載"></script>
+            <div id="nc-float" style="display:none;">
+                <div class="nc-f-head">
+                    <img class="nc-f-icon" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/TB1_3FrKVXXXXbdXXXXXXXXXXXX-129-128.png" alt="" height="20" width="20">
+                    <span class="nc-f-title">安全验证</span>
+                    <a class="close" href="http://bbs.eeworld.com.cn/#"><i class="nc_iconfont"></i></a>
+                </div>
+                <div class="nc-f-body" id="oculus-nc-f-body">
+                <div class="nc-f-des">请完成以下验证码</div>
+                    <div id="nocaptcha"></div>
+                </div>
+            </div>
+<div id="wp" class="wp">
+<script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/jquery-1.9.2.min.js.下載" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery(function () {
+/*帖子分享*/
+        jQuery('.jiathis_button_tools_1,.jiathis_button_tools_2,.jiathis_button_tools_3,.jiathis_button_tools_4').click(function () {
+            jQuery.ajax({
+                type: "GET",
+                url: "./drycargo/ajax_money.php?rand="+Math.random(),
+                data: {'tid':475972},
+                success: function(data){
+                },
+error:function () {
+                }
+            });
+        });
+    });
+</script>
+
+
+<script type="text/javascript">var fid = parseInt('126'), tid = parseInt('475972');</script>
+
+<script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/forum_viewthread.js.下載" type="text/javascript"></script>
+<script type="text/javascript">zoomstatus = parseInt(1);var imagemaxwidth = '600';var aimgcount = new Array();</script>
+
+<style id="diy_style" type="text/css"></style>
+<!--[diy=diynavtop]--><div id="diynavtop" class="area"></div><!--[/diy]-->
+<div id="pt" class="bm cl">
+<div class="z">
+<a href="http://bbs.eeworld.com.cn/" class="nvhm" title="首页">电子工程世界-论坛</a><em>&#187;</em><a href="http://bbs.eeworld.com.cn/forum.php">论坛</a> <em>&#8250;</em> <a href="http://bbs.eeworld.com.cn/forum.php?gid=61">电子技术交流</a> <em>&#8250;</em> <a href="http://bbs.eeworld.com.cn/forum-16-1.html">单片机</a> <em>&#8250;</em> <a href="http://bbs.eeworld.com.cn/forum-126-1.html">【stm32/stm8】</a> <em>&#8250;</em> <a href="http://bbs.eeworld.com.cn/thread-475972-1-1.html">F7 独轮机器人 MPU6050-DMP移植</a>
+</div>
+</div>
+
+
+<div class="wp a_t">
+<table cellspacing="1" cellpadding="0">
+<tbody>
+<tr>
+  <td width="100%">
+          <script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/forumad.php" type="text/javascript"></script><script type="text/javascript">BAIDU_CLB_fillSlot("202494");</script>
+  </td>
+</tr>
+</tbody>
+</table>
+</div><div class="wp a_t"><table cellpadding="0" cellspacing="1"><tbody><tr><td width="100%"><!-- 广告位：BBS_单片机_我们的Freescale_内容页_S-A3 -->
+<script type="text/javascript">BAIDU_CLB_fillSlot("202522");</script></td></tr>
+</tbody></table></div><div class="wp a_t">
+<table cellspacing="1" cellpadding="0">
+<tbody>
+<tr>
+  <td width="100%">
+          <script src="http://bbs.eeworld.com.cn/javascript/ad_js/adv.php?forumid=16&amp;subid=126" type="text/javascript"></script>
+  </td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<style id="diy_style" type="text/css"></style>
+<div class="wp">
+<!--[diy=diy1]--><div id="diy1" class="area"></div><!--[/diy]-->
+</div>
+
+
+
+<style>
+ 
+
+.bdl { float: left; overflow: hidden;  background-color: #F5F9FB; }
+.ie6 .bdl { position: relative; }
+.bdl_h { height: 32px; line-height: 22px; }
+.bdl .tbn { margin: 10px; }
+/* 分区 */
+.bdl dl { margin: -1px -10px 0; }
+.bdl dt { overflow: hidden; height: 27px; line-height: 27px; border: solid #CCE0EB; border-width: 1px 0; background: #F5F9FB url(/static/image/common//titlebg_sd.png) repeat-x 100% 0; }
+.bdl dt a { display: block; padding: 0 15px 0 10px; }
+.bdl dt a:hover, .bdl_a a:hover { text-decoration: none; }
+/* 版块，默认收起 */
+.bdl dd { display: none; }
+.bdl dd a { display: block; margin: 0 3px; padding: 0 7px; height: 26px; line-height: 26px; overflow: hidden; }
+/* 展开的分区 */
+.bdl dl.a { padding-bottom: 4px; background-color: #FFF; }
+.bdl dl.a dt { margin-bottom: 3px; background-position: 100% -27px; }
+.bdl dl.a dd, .bdl_fav dd { display: block; overflow: hidden; zoom: 1; }
+/* 当前版块 */
+.bdl dd.bdl_a a { background-color: #F5F9FB; font-weight: 700; color: HIGHLIGHTLINK; }
+
+.previewPost { width: 100%; font-size: 14px; }
+/* 点击加载下一页按钮样式 */
+#autopbn { display: block; margin-bottom: 10px; border: 1px solid rgb(194, 213, 227); border-radius: 3px; text-align: center; }
+#autopbn:hover { background: #fff; text-decoration: none; }
+/* 上涨和下降图标样式 */
+.ico_increase, .ico_fall { display: inline-block; width: 16px; height: 16px; margin: 0 5px; background: url(/static/image/common//increase.png) no-repeat left center; vertical-align: middle; text-indent: -999em; }
+.ico_fall { background: url(/static/image/common//fall.png) no-repeat left center; }
+/* 版块热帖日历样式 */
+#ReTie_review h6 { padding: 0 10px; line-height: 27px; }
+.review_this { padding: 5px 0 10px; }
+.review_this li { float: left; width: 7.5%; text-align: center; }
+
+
+
+</style>
+
+
+<div id="ct" class="wp cl">
+
+
+
+
+  <div class="mn">
+
+<div id="pgt" class="pgs mbm cl ">
+<div class="pgt"></div>
+<span class="y pgb"><a href="http://bbs.eeworld.com.cn/forum-126-1.html">返回列表</a></span>
+<a id="newspecial" onmouseover="$(&#39;newspecial&#39;).id = &#39;newspecialtmp&#39;;this.id = &#39;newspecial&#39;;showMenu({&#39;ctrlid&#39;:this.id})" onclick="showWindow(&#39;newthread&#39;, &#39;forum.php?mod=post&amp;action=newthread&amp;fid=126&#39;)" href="javascript:;" title="发新帖"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/pn_post.png" alt="发新帖"></a></div>
+
+
+
+<div id="postlist" class="pl bm ">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="pls ptn pbn">
+<div class="hm ptn">
+<span class="xg1">查看:</span> <span class="xi1">4378</span><span class="pipe">|</span><span class="xg1">回复:</span> <span class="xi1">5</span>
+</div>
+</td>
+<td class="plc ptm pbn vwthd">
+<div class="y">
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;action=printable&amp;tid=475972" title="打印" target="_blank"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/print.png" alt="打印" class="vm"></a>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=redirect&amp;goto=nextoldset&amp;tid=475972" title="上一主题"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/thread-prev.png" alt="上一主题" class="vm"></a>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=redirect&amp;goto=nextnewset&amp;tid=475972" title="下一主题"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/thread-next.png" alt="下一主题" class="vm"></a>
+</div>
+<h1 class="ts">
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=forumdisplay&amp;fid=126&amp;filter=typeid&amp;typeid=173">[原创]</a>
+<span id="thread_subject">F7 独轮机器人 MPU6050-DMP移植</span>
+</h1>
+<span class="xg1">
+<a href="http://bbs.eeworld.com.cn/thread-475972-1-1.html" onclick="return copyThreadUrl(this, &#39;电子工程世界-论坛&#39;)">[复制链接]</a>
+</span>
+</td>
+</tr>
+</tbody></table>
+
+
+<table cellspacing="0" cellpadding="0" class="ad">
+<tbody><tr>
+<td class="pls">
+</td>
+<td class="plc">
+</td>
+</tr>
+</tbody></table><div id="post_1939173">    <table id="pid1939173" class="plhin" name="pid1939173" summary="pid1939173" cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="pls" rowspan="2">
+<div id="favatar1939173" class="pls favatar" style="top: 41px; position: fixed;">
+<a name="newpost"></a> <div class="pi">
+<div class="authi"><a href="http://home.eeworld.com.cn/space-uid-528325.html" target="_blank" class="xw1">ketose</a>
+</div>
+</div>
+<div class="p_pop blk bui card_gender_0" id="userinfo1939173" style="display: none; margin-top: -11px;">
+<div class="m z">
+<div id="userinfo1939173_ma"></div>
+</div>
+<div class="i y">
+<div>
+<strong><a href="http://home.eeworld.com.cn/space-uid-528325.html" target="_blank" class="xi2">ketose</a></strong>
+<em>当前离线</em>
+</div><dl class="cl">
+<dt>最后登录</dt><dd>2018-4-20</dd>
+<dt>在线时间</dt><dd>441 小时</dd>
+<dt>注册时间</dt><dd>2014-2-17</dd>
+<dt>威望</dt><dd>240分</dd>
+<dt>芯币</dt><dd>2894枚</dd>
+<dt>E金币</dt><dd>44枚<a href="http://bbs.eeworld.com.cn/thread-505119-1-1.html" target="_blank" style="text-decoration:underline;color:red;">(兑换)</a></dd>
+<dt>学分</dt><dd><a style="color:blue;" href="http://www.eeworld.com.cn/training/score/second.html#scoreintroduce" target="_blank" title="点击查看学分说明">0分</a></dd>
+<dt>好友</dt><dd><a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=528325&amp;do=friend&amp;view=me&amp;from=space" target="_blank" class="xi2">5</a></dd>
+
+<dt>积分</dt><dd><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=plugin&amp;op=credit&amp;id=eew_credits:eewzc" target="_blank" class="xi2">299</a></dd>
+</dl>
+<div class="imicn">
+<a href="http://wpa.qq.com/msgrd?V=3&amp;Uin=25656016&amp;Site=%B5%E7%D7%D3%B9%A4%B3%CC%CA%C0%BD%E7-%C2%DB%CC%B3&amp;Menu=yes&amp;from=discuz" target="_blank" title="QQ"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/qq.gif" alt="QQ"></a><a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=528325&amp;do=profile" target="_blank" title="查看详细资料"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/userinfo.gif" alt="查看详细资料"></a>
+</div>
+<div id="avatarfeed"><span id="threadsortswait"></span></div>
+</div>
+</div>
+<div>
+<div class="avatar" onmouseover="showauthor(this, &#39;userinfo1939173&#39;)"><a href="http://home.eeworld.com.cn/space-uid-528325.html" class="avtm" target="_blank"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/avatar.php"></a></div>
+</div>
+<div class="tns xg2"><table cellspacing="0" cellpadding="0"><tbody><tr><th><p><a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=528325&amp;do=thread&amp;type=thread&amp;view=me&amp;from=space" class="xi2">538</a></p>TA的帖子</th><th><p><a href="http://download.eeworld.com.cn/user/ketose" class="xi2">20</a></p>TA的资源</th></tr></tbody></table></div>
+<p><em><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=usergroup&amp;gid=35" target="_blank">一粒金砂（高级）</a></em></p>
+<p><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=usergroup&amp;gid=35" target="_blank"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/level1-3.jpg" alt="" class="vm"></a></p>
+
+<p><span id="g_up1939173" onmouseover="showMenu({&#39;ctrlid&#39;:this.id, &#39;pos&#39;:&#39;12!&#39;});"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/star_level2.gif" alt="Rank: 3"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/star_level1.gif" alt="Rank: 3"></span></p>
+<div id="g_up1939173_menu" class="tip tip_4" style="display: none;"><div class="tip_horn"></div><div class="tip_c">一粒金砂（高级）, 积分 240, 距离下一级还需 260 积分</div></div>
+
+
+
+<span class="pbg2" id="upgradeprogress_1939173" onmouseover="showMenu({&#39;ctrlid&#39;:this.id, &#39;pos&#39;:&#39;12!&#39;, &#39;menuid&#39;:&#39;g_up1939173_menu&#39;});"><span class="pbr2" style="width:13%;"></span></span>
+<div id="g_up1939173_menu" class="tip tip_4" style="display: none;"><div class="tip_horn"></div><div class="tip_c">一粒金砂（高级）, 积分 240, 距离下一级还需 260 积分</div></div>
+
+<ul class="xl xl2 o cl">
+<li class="pm2"><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=pm&amp;op=showmsg&amp;handlekey=showmsg_528325&amp;touid=528325&amp;pmid=0&amp;daterange=2&amp;pid=1939173&amp;tid=475972" onclick="showWindow(&#39;sendpm&#39;, this.href);" title="发消息" class="xi2">发消息</a></li>
+<li class="buddy"><a onclick="showWindow(this.id, this.href, &#39;get&#39;, 0);" id="a_friend_li_528325" href="http://bbs.eeworld.com.cn/home.php?mod=spacecp&amp;ac=friend&amp;op=add&amp;uid=528325&amp;handlekey=addfriendhk_528325">加好友</a></li>
+</ul>
+</div>
+</td>
+	
+<td class="plc">
+<div class="pi">
+<div id="fj" class="y">
+<label class="z">电梯直达</label>
+<input type="text" class="px p_fre z" size="2" onkeyup="$(&#39;fj_btn&#39;).href=&#39;forum.php?mod=redirect&amp;ptid=475972&amp;authorid=0&amp;postno=&#39;+this.value" onkeydown="if(event.keyCode==13) {window.location=$(&#39;fj_btn&#39;).href;return false;}" title="跳转到指定楼层">
+<a href="javascript:;" id="fj_btn" class="z" title="跳转到指定楼层"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/fj_btn.png" alt="跳转到指定楼层" class="vm"></a>
+</div>
+<strong>
+<a href="http://bbs.eeworld.com.cn/thread-475972-1-1.html" id="postnum1939173" onclick="setCopy(this.href, &#39;帖子地址复制成功&#39;);return false;">
+楼主</a>
+</strong>
+<div class="pti">
+<div class="pdbt">
+</div>
+<div class="authi">
+<img class="authicn vm" id="authicon1939173" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/online_member.gif">
+<em id="authorposton1939173">发表于 2015-10-26 21:43:07</em>
+<span class="pipe">|</span>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;tid=475972&amp;page=1&amp;authorid=528325" rel="nofollow">只看该作者</a>
+<span class="pipe">|</span><a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;tid=475972&amp;from=album">只看大图</a>
+ 
+<span class="pipe ">|</span><a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;tid=475972&amp;extra=page%3D1&amp;ordertype=1">倒序浏览</a>
+<span class="pipe ">|</span><a href="javascript:;" onclick="readmode($(&#39;thread_subject&#39;).innerHTML, 1939173);">阅读模式</a>
+</div>
+</div>
+</div><div class="pct"><style type="text/css">.pcb{margin-right:0}</style><link rel="stylesheet" type="text/css" href="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/markdown.css">
+<div class="pcb">
+     <!--568693-->
+
+    
+<div class="t_fsz">
+<table cellspacing="0" cellpadding="0"><tbody><tr><td class="t_f" id="postmessage_1939173">
+<div class="a_pr" style="margin-left:10px;width:auto"><!-- 广告位：BBS_单片机_stm32&#47;sem8_内容页_S-A4 -->
+<script type="text/javascript">BAIDU_CLB_fillSlot("202496");</script></div>
+<i class="pstatus"> 本帖最后由 ketose 于 2015-10-26 21:43 编辑 </i><br>
+<br>
+&nbsp; &nbsp;&nbsp;&nbsp;这篇主要谈独轮机器人的软件部分，独轮机器人要想能够站立不倒，那么必须有个反馈把现在的状态反馈给MCU。这个反馈在该项目中使用的是MPU6050这个模块，所以我们就要把MPU6050的数据读出来。MPU6050是什么东西？MPU-6000（6050）的角速度全格感测范围为±250、±500、±1000与±2000°/sec (dps)，可准确追踪快速与慢速动作，并且，用户可程式控制的加速器全格感测范围为±2g、±4g±8g与±16g。产品传输可透过最高至400kHz的IC或最高达20MHz的SPI（MPU-6050没有SPI）。MPU-6000可在不同电压下工作，VDD供电电压介为2.5V±5%、3.0V±5%或3.3V±5%，逻辑接口VVDIO供电为1.8V± 5%（MPU6000仅用VDD）。MPU-6000的包装尺寸4x4x0.9mm(QFN)，在业界是革命性的尺寸。其他的特征包含内建的温度感测器、包含在运作环境中仅有±1%变动的振荡器。<br>
+&nbsp; &nbsp; 以数字输出6轴或9轴的旋转矩阵、四元数(quaternion)、欧拉角格式(Euler Angle forma)的融合演算数据。 具有131 LSBs/°/sec 敏感度与全格感测范围为±250、±500、±1000与±2000°/sec 的3轴角速度感测器(陀螺仪)。 可程式控制，且程式控制范围为±2g、±4g、±8g和±16g的3轴加速器。 移除加速器与陀螺仪轴间敏感度，降低设定给予的影响与感测器的飘移。 数字运动处理(DMP: Digital Motion Processing)引擎可减少复杂的融合演算数据、感测器同步化、姿势感应等的负荷。 运动处理数据库支持Android、Linux与Windows 内建之运作时间偏差与磁力感测器校正演算技术，免除了客户须另外进行校正的需求。<br>
+&nbsp; &nbsp;读MPU6050的数据有两种方案，一种通过寄存器直接读出原始数据，然后进行数据融合，计算出机器人的倾斜角度和角速度。还有一种是使用MPU6050数字运动处理(DMP: Digital Motion Processing)引擎。我们的项目中使用DMP，官方只给出了DMP在MSP430上的例子，今天就来说说MPU6050的DMP在STM32F7上的移植。<br>
+先看下电路图：<br>
+
+<ignore_js_op>
+
+<img style="cursor: pointer;" id="aimg_218805" aid="218805" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/193333mh03e4dm02740h24.png.thumb.jpg" onclick="zoom(this, this.getAttribute(&#39;zoomfile&#39;), 0, 0, &#39;0&#39;)" zoomfile="http://5.eewimg.cn/data/attachment/forum/201510/26/193333mh03e4dm02740h24.png" file="http://5.eewimg.cn/data/attachment/forum/201510/26/193333mh03e4dm02740h24.png.thumb.jpg" inpost="1" onmouseover="showMenu({&#39;ctrlid&#39;:this.id,&#39;pos&#39;:&#39;12&#39;})" lazyloaded="true" _load="1" initialized="true">
+
+<div class="tip tip_4 aimg_tip" id="aimg_218805_menu" style="position: absolute; z-index: 301; left: 399px; top: 603px; display: none;" disautofocus="true" initialized="true">
+<div class="xs0">
+<p><strong>QQ图片20151026193253.png</strong> <em class="xg1">(52.81 KB, 下载次数: 0)</em></p>
+<p>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=attachment&amp;aid=MjE4ODA1fGE4ZjQ2NjNifDE1MjQ0OTc4NTF8MHw0NzU5NzI%3D&amp;nothumb=yes" target="_blank">下载附件</a>
+
+&nbsp;<a href="javascript:;" onclick="showWindow(this.id, this.getAttribute(&#39;url&#39;), &#39;get&#39;, 0);" id="savephoto_218805" url="home.php?mod=spacecp&amp;ac=album&amp;op=saveforumphoto&amp;aid=218805&amp;handlekey=savephoto_218805">保存到相册</a>
+
+</p>
+
+<p class="xg1 y">2015-10-26 19:33 上传</p>
+
+</div>
+<div class="tip_horn"></div>
+</div>
+
+</ignore_js_op>
+<br>
+从原理上看，使用了PB8,PB9两个引角，所以在配置的时候，我们配置这两个引角<br>
+
+<ignore_js_op>
+
+<img style="cursor: pointer;" id="aimg_218806" aid="218806" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/195015utthnafpzpofyaff.jpg.thumb.jpg" onclick="zoom(this, this.getAttribute(&#39;zoomfile&#39;), 0, 0, &#39;0&#39;)" zoomfile="http://5.eewimg.cn/data/attachment/forum/201510/26/195015utthnafpzpofyaff.jpg" file="http://5.eewimg.cn/data/attachment/forum/201510/26/195015utthnafpzpofyaff.jpg.thumb.jpg" inpost="1" onmouseover="showMenu({&#39;ctrlid&#39;:this.id,&#39;pos&#39;:&#39;12&#39;})" lazyloaded="true" _load="1">
+
+<div class="tip tip_4 aimg_tip" id="aimg_218806_menu" style="position: absolute; display: none" disautofocus="true">
+<div class="xs0">
+<p><strong>QQ图片20151026195006.jpg</strong> <em class="xg1">(161.43 KB, 下载次数: 2)</em></p>
+<p>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=attachment&amp;aid=MjE4ODA2fDcxMmFkYjYyfDE1MjQ0OTc4NTF8MHw0NzU5NzI%3D&amp;nothumb=yes" target="_blank">下载附件</a>
+
+&nbsp;<a href="javascript:;" onclick="showWindow(this.id, this.getAttribute(&#39;url&#39;), &#39;get&#39;, 0);" id="savephoto_218806" url="home.php?mod=spacecp&amp;ac=album&amp;op=saveforumphoto&amp;aid=218806&amp;handlekey=savephoto_218806">保存到相册</a>
+
+</p>
+
+<p class="xg1 y">2015-10-26 19:50 上传</p>
+
+</div>
+<div class="tip_horn"></div>
+</div>
+
+</ignore_js_op>
+<br>
+另外我们项目使用到FreeRTOS所以这个也必须选上，还有就是使用串口来给上位机传输调试信息，所以串口也要选上。<br>
+时钟配置如下：<br>
+
+<ignore_js_op>
+
+<img style="cursor: pointer;" id="aimg_218807" aid="218807" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/195402p3c9l6abwua9a18y.jpg.thumb.jpg" onclick="zoom(this, this.getAttribute(&#39;zoomfile&#39;), 0, 0, &#39;0&#39;)" zoomfile="http://5.eewimg.cn/data/attachment/forum/201510/26/195402p3c9l6abwua9a18y.jpg" file="http://5.eewimg.cn/data/attachment/forum/201510/26/195402p3c9l6abwua9a18y.jpg.thumb.jpg" inpost="1" onmouseover="showMenu({&#39;ctrlid&#39;:this.id,&#39;pos&#39;:&#39;12&#39;})" lazyloaded="true" _load="1" initialized="true">
+
+<div class="tip tip_4 aimg_tip" id="aimg_218807_menu" style="position: absolute; z-index: 301; left: 399px; top: 1358px; display: none;" disautofocus="true" initialized="true">
+<div class="xs0">
+<p><strong>QQ图片20151026195351.jpg</strong> <em class="xg1">(200.24 KB, 下载次数: 0)</em></p>
+<p>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=attachment&amp;aid=MjE4ODA3fDdkYTIwMzlifDE1MjQ0OTc4NTF8MHw0NzU5NzI%3D&amp;nothumb=yes" target="_blank">下载附件</a>
+
+&nbsp;<a href="javascript:;" onclick="showWindow(this.id, this.getAttribute(&#39;url&#39;), &#39;get&#39;, 0);" id="savephoto_218807" url="home.php?mod=spacecp&amp;ac=album&amp;op=saveforumphoto&amp;aid=218807&amp;handlekey=savephoto_218807">保存到相册</a>
+
+</p>
+
+<p class="xg1 y">2015-10-26 19:54 上传</p>
+
+</div>
+<div class="tip_horn"></div>
+</div>
+
+</ignore_js_op>
+<br>
+FreeRTOS再添加两个任务。堆栈由原来的128改为256.因为MPU6050 DMP库使用的堆栈超过了128.<br>
+
+<ignore_js_op>
+
+<img style="cursor: pointer;" id="aimg_218808" aid="218808" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/195622iwuxj6re8qbwewr5.jpg.thumb.jpg" onclick="zoom(this, this.getAttribute(&#39;zoomfile&#39;), 0, 0, &#39;0&#39;)" zoomfile="http://5.eewimg.cn/data/attachment/forum/201510/26/195622iwuxj6re8qbwewr5.jpg" file="http://5.eewimg.cn/data/attachment/forum/201510/26/195622iwuxj6re8qbwewr5.jpg.thumb.jpg" inpost="1" onmouseover="showMenu({&#39;ctrlid&#39;:this.id,&#39;pos&#39;:&#39;12&#39;})" lazyloaded="true" _load="1" initialized="true">
+
+<div class="tip tip_4 aimg_tip" id="aimg_218808_menu" style="position: absolute; z-index: 301; left: 399px; top: 1780px; display: none;" disautofocus="true" initialized="true">
+<div class="xs0">
+<p><strong>QQ图片20151026195612.jpg</strong> <em class="xg1">(65.93 KB, 下载次数: 0)</em></p>
+<p>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=attachment&amp;aid=MjE4ODA4fGI4ODE3M2VifDE1MjQ0OTc4NTF8MHw0NzU5NzI%3D&amp;nothumb=yes" target="_blank">下载附件</a>
+
+&nbsp;<a href="javascript:;" onclick="showWindow(this.id, this.getAttribute(&#39;url&#39;), &#39;get&#39;, 0);" id="savephoto_218808" url="home.php?mod=spacecp&amp;ac=album&amp;op=saveforumphoto&amp;aid=218808&amp;handlekey=savephoto_218808">保存到相册</a>
+
+</p>
+
+<p class="xg1 y">2015-10-26 19:56 上传</p>
+
+</div>
+<div class="tip_horn"></div>
+</div>
+
+</ignore_js_op>
+<br>
+一切配置完后生成项目。<br>
+在生成的项目文件夹里新建Drv文件夹，然后把MPU6050 DMP官方例子里的eMPL文件夹全部复制过来，并添加到项目里。<br>
+
+<ignore_js_op>
+
+<img style="cursor: pointer;" id="aimg_218809" aid="218809" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/200210m2akvst5zz5qxaa5.png.thumb.jpg" onclick="zoom(this, this.getAttribute(&#39;zoomfile&#39;), 0, 0, &#39;0&#39;)" zoomfile="http://5.eewimg.cn/data/attachment/forum/201510/26/200210m2akvst5zz5qxaa5.png" file="http://5.eewimg.cn/data/attachment/forum/201510/26/200210m2akvst5zz5qxaa5.png.thumb.jpg" inpost="1" onmouseover="showMenu({&#39;ctrlid&#39;:this.id,&#39;pos&#39;:&#39;12&#39;})" lazyloaded="true" _load="1" initialized="true">
+
+<div class="tip tip_4 aimg_tip" id="aimg_218809_menu" style="position: absolute; z-index: 301; left: 399px; top: 2397px; display: none;" disautofocus="true" initialized="true">
+<div class="xs0">
+<p><strong>QQ图片20151026200158.png</strong> <em class="xg1">(21.16 KB, 下载次数: 0)</em></p>
+<p>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=attachment&amp;aid=MjE4ODA5fGRjMmY5Njk5fDE1MjQ0OTc4NTF8MHw0NzU5NzI%3D&amp;nothumb=yes" target="_blank">下载附件</a>
+
+&nbsp;<a href="javascript:;" onclick="showWindow(this.id, this.getAttribute(&#39;url&#39;), &#39;get&#39;, 0);" id="savephoto_218809" url="home.php?mod=spacecp&amp;ac=album&amp;op=saveforumphoto&amp;aid=218809&amp;handlekey=savephoto_218809">保存到相册</a>
+
+</p>
+
+<p class="xg1 y">2015-10-26 20:02 上传</p>
+
+</div>
+<div class="tip_horn"></div>
+</div>
+
+</ignore_js_op>
+<br>
+一切准备工作就绪，下面就来看如何移植到F7里了。其实就一个文件inv_mpu.c把这个文件里所有MPS430的注释到，然后实现I2C的读写函数。<br>
+<div class="blockcode"><div id="code_Fe7"><ol><li>#if defined MOTION_DRIVER_TARGET_STM32F7<br>
+</li><li>&lt;font color="Green"&gt;/*#include "msp430.h"<br>
+</li><li>#include "msp430_i2c.h"<br>
+</li><li>#include "msp430_clock.h"<br>
+</li><li>#include "msp430_interrupt.h" */&lt;/font&gt;<br>
+</li><li><br>
+</li><li>#define i2c_write&nbsp; &nbsp;i2cWrite<br>
+</li><li>#define i2c_read&nbsp; &nbsp; i2cRead<br>
+</li><li>#define delay_ms&nbsp; &nbsp; delay_ms<br>
+</li><li>#define get_ms&nbsp; &nbsp;&nbsp; &nbsp;get_ms<br>
+</li><li><br>
+</li><li>&lt;font color="Green"&gt;//static int reg_int_cb(struct int_param_s *int_param)<br>
+</li><li>//{<br>
+</li><li>//&nbsp; &nbsp; /*return msp430_reg_int_cb(int_param-&gt;cb, int_param-&gt;pin, int_param-&gt;lp_exit,<br>
+</li><li>//&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;int_param-&gt;active_low);*/<br>
+</li><li>//&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; return 0;<br>
+</li><li>//}&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; <br>
+</li><li>//#define log_i(...)&nbsp; &nbsp;&nbsp;&nbsp;do {} while (0)<br>
+</li><li>//#define log_e(...)&nbsp; &nbsp;&nbsp;&nbsp;do {} while (0)&lt;/font&gt;<br>
+</li><li>#define log_e&nbsp; &nbsp; printf<br>
+</li><li>#define log_i&nbsp; &nbsp; printf<br>
+</li><li>&lt;font color="Green"&gt;/* labs is already defined by TI's toolchain. */<br>
+</li><li>/* fabs is for doubles. fabsf is for floats. */&lt;/font&gt;<br>
+</li><li>#define fabs&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;fabsf<br>
+</li><li>#define min(a,b) ((a&lt;b)?a:b)</li></ol></div><em onclick="copycode($(&#39;code_Fe7&#39;));">复制代码</em></div>实现硬件相关的几个函数：<br>
+<div class="blockcode"><div id="code_U9O"><ol><li>void get_ms(unsigned long *time)<br>
+</li><li>{<br>
+</li><li><br>
+</li><li>}<br>
+</li><li>&lt;font color="Green"&gt;/**<br>
+</li><li>****************************************************************************************<br>
+</li><li>* @brief&nbsp;&nbsp;delay function<br>
+</li><li>* @description<br>
+</li><li>*&nbsp;&nbsp;This function is to use timer7 to delay for mpu6050 sensor.<br>
+</li><li>*****************************************************************************************<br>
+</li><li>*/&lt;/font&gt;<br>
+</li><li>__weak void mdelay(uint32_t ms)<br>
+</li><li>{<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;extern int delayCount;<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;delayCount = ms;<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;HAL_TIM_Base_Start_IT(&amp;htim7);<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;while(delayCount != 0);<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;HAL_TIM_Base_Stop_IT(&amp;htim7);<br>
+</li><li>}<br>
+</li><li>&lt;font color="Green"&gt;/**<br>
+</li><li>****************************************************************************************<br>
+</li><li>* @brief&nbsp;&nbsp;I2C function for write mpu data<br>
+</li><li>* @description<br>
+</li><li>*&nbsp;&nbsp;This function is implemented using the i2c bus protocol write data to the mpu6050 sensor.<br>
+</li><li>*****************************************************************************************<br>
+</li><li>*/&lt;/font&gt;<br>
+</li><li>__weak int i2cwrite(uint8_t addr, uint8_t reg, uint8_t len, uint8_t * data)<br>
+</li><li>{<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;if(HAL_I2C_Mem_Write(&amp;hi2c1,addr&lt;&lt;1,reg,1,data,len,5000) == HAL_OK)<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; return 0;<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;else<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; return 1;<br>
+</li><li>}<br>
+</li><li>&lt;font color="Green"&gt;/**<br>
+</li><li>****************************************************************************************<br>
+</li><li>* @brief&nbsp;&nbsp;I2C function for read mpu data<br>
+</li><li>* @description<br>
+</li><li>*&nbsp;&nbsp;This function is to impletmented using i2c bus protocol read data from mpu6050 sensor.<br>
+</li><li>*****************************************************************************************<br>
+</li><li>*/&lt;/font&gt;<br>
+</li><li>__weak int i2cread(uint8_t addr, uint8_t reg, uint8_t len, uint8_t *data)<br>
+</li><li>{<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;if(HAL_I2C_Mem_Read(&amp;hi2c1,addr&lt;&lt;1,reg,1,data,len,5000) == HAL_OK)<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; return 0;<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;else<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; return 1;<br>
+</li><li>}</li></ol></div><em onclick="copycode($(&#39;code_U9O&#39;));">复制代码</em></div>OK了，移植完成了，很简单，再增加两个辅助函数，一个是MPU6050 DMP的初始化，一个就是读MPU6050的数据。<br>
+<div class="blockcode"><div id="code_R44"><ol><li>&lt;font color="Green"&gt;/**<br>
+</li><li>****************************************************************************************<br>
+</li><li>* @brief&nbsp;&nbsp;start mpu6050 dmp<br>
+</li><li>* @description<br>
+</li><li>*&nbsp;&nbsp;This function is used to initialize mpu6050 dmp.<br>
+</li><li>*****************************************************************************************<br>
+</li><li>*/&lt;/font&gt;<br>
+</li><li>void mpu_start()<br>
+</li><li>{<br>
+</li><li>&nbsp; &nbsp; int result = mpu_init(NULL);<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;while(result != MPU_OK)<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;{<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; result = mpu_init(NULL);<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;}<br>
+</li><li>&nbsp; &nbsp; if(result == MPU_OK)<br>
+</li><li>&nbsp; &nbsp; {<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;printf("mpu initialization complete......\n ");&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; //mpu_set_sensor<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;if(mpu_set_sensors(INV_XYZ_GYRO | INV_XYZ_ACCEL) == MPU_OK)<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("mpu_set_sensor complete ......\n");<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;else<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("mpu_set_sensor come across error ......\n");<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;if(mpu_configure_fifo(INV_XYZ_GYRO | INV_XYZ_ACCEL) == MPU_OK)&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;//mpu_configure_fifo<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("mpu_configure_fifo complete ......\n");<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;else<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("mpu_configure_fifo come across error ......\n");<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;if(mpu_set_sample_rate(DEFAULT_MPU_HZ) == MPU_OK)&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;//mpu_set_sample_rate<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("mpu_set_sample_rate complete ......\n");<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;else<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("mpu_set_sample_rate error ......\n");<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;if(dmp_load_motion_driver_firmware() == MPU_OK)&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; //dmp_load_motion_driver_firmvare<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("dmp_load_motion_driver_firmware complete ......\n");<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;else<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("dmp_load_motion_driver_firmware come across error ......\n");<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;if(dmp_set_orientation(inv_orientation_matrix_to_scalar(gyro_orientation)) == MPU_OK)&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;//dmp_set_orientation<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("dmp_set_orientation complete ......\n");<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;else<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("dmp_set_orientation come across error ......\n");<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;if(dmp_enable_feature(DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_TAP |<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;DMP_FEATURE_ANDROID_ORIENT | DMP_FEATURE_SEND_RAW_ACCEL | DMP_FEATURE_SEND_CAL_GYRO |<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;DMP_FEATURE_GYRO_CAL) == MPU_OK)&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;//dmp_enable_feature<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("dmp_enable_feature complete ......\n");<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;else<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("dmp_enable_feature come across error ......\n");<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;if(dmp_set_fifo_rate(DEFAULT_MPU_HZ) == MPU_OK)&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; //dmp_set_fifo_rate<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("dmp_set_fifo_rate complete ......\n");<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;else<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("dmp_set_fifo_rate come across error ......\n");<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;run_self_test();<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;if(mpu_set_dmp_state(1) == MPU_OK)<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("mpu_set_dmp_state complete ......\n");<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;else<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;printf("mpu_set_dmp_state come across error ......\n");<br>
+</li><li>&nbsp; &nbsp; }<br>
+</li><li>}<br>
+</li><li></li></ol></div><em onclick="copycode($(&#39;code_R44&#39;));">复制代码</em></div>读数据：<br>
+<div class="blockcode"><div id="code_lIZ"><ol><li>&lt;font color="Green"&gt;/**<br>
+</li><li>****************************************************************************************<br>
+</li><li>* @brief&nbsp;&nbsp;read data from mpu6050<br>
+</li><li>* @description<br>
+</li><li>*&nbsp;&nbsp;This function is to use DMP to read data from mpu6050 sensor.<br>
+</li><li>*****************************************************************************************<br>
+</li><li>*/&lt;/font&gt;<br>
+</li><li>int mpu_read(MPU_Data* data)<br>
+</li><li>{<br>
+</li><li><br>
+</li><li>#define q30&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 1073741824.0f<br>
+</li><li>#define u8&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; uint8_t<br>
+</li><li><br>
+</li><li>&nbsp; &nbsp; float q0=1.0f,q1=0.0f,q2=0.0f,q3=0.0f;<br>
+</li><li><br>
+</li><li>&nbsp; &nbsp; unsigned long sensor_timestamp;<br>
+</li><li>&nbsp; &nbsp; short sensors;<br>
+</li><li>&nbsp; &nbsp; unsigned char more;<br>
+</li><li>&nbsp; &nbsp; long quat[4];<br>
+</li><li><br>
+</li><li>&nbsp; &nbsp; dmp_read_fifo(data-&gt;gyro, data-&gt;accel, quat, &amp;sensor_timestamp, &amp;sensors,&amp;more);<br>
+</li><li>&nbsp; &nbsp; /* Gyro and accel data are written to the FIFO by the DMP in chip<br>
+</li><li>&nbsp; &nbsp; * frame and hardware units. This behavior is convenient because it<br>
+</li><li>&nbsp; &nbsp; * keeps the gyro and accel outputs of dmp_read_fifo and<br>
+</li><li>&nbsp; &nbsp; * mpu_read_fifo consistent.<br>
+</li><li>&nbsp; &nbsp; */<br>
+</li><li><br>
+</li><li>&nbsp; &nbsp; /* Unlike gyro and accel, quaternions are written to the FIFO in<br>
+</li><li>&nbsp; &nbsp; * the body frame, q30. The orientation is set by the scalar passed<br>
+</li><li>&nbsp; &nbsp; * to dmp_set_orientation during initialization.<br>
+</li><li>&nbsp; &nbsp; */<br>
+</li><li>&nbsp; &nbsp; if (sensors &amp; INV_WXYZ_QUAT )<br>
+</li><li>&nbsp; &nbsp; {<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;q0=quat[0] / q30;<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;q1=quat[1] / q30;<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;q2=quat[2] / q30;<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;q3=quat[3] / q30;<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;data-&gt;Pitch&nbsp;&nbsp;= asin(2 * q1 * q3 - 2 * q0* q2)* 57.3; // pitch<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;data-&gt;Roll = atan2(2 * q2 * q3 + 2 * q0 * q1, -2 * q1 * q1 - 2 * q2* q2 + 1)* 57.3; // roll<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;data-&gt;Yaw = atan2(2*(q1*q2 + q0*q3),q0*q0+q1*q1-q2*q2-q3*q3) * 57.3;<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; return MPU_OK;<br>
+</li><li>&nbsp; &nbsp; }<br>
+</li><li><br>
+</li><li>&nbsp; &nbsp; return MPU_ERR;<br>
+</li><li>}</li></ol></div><em onclick="copycode($(&#39;code_lIZ&#39;));">复制代码</em></div>在freertos.c文件里添加任务代码：<br>
+<div class="blockcode"><div id="code_O59"><ol><li>&lt;font color="Green"&gt;/* StartDefaultTask function */&lt;/font&gt;<br>
+</li><li>void StartDefaultTask(void const * argument)<br>
+</li><li>{<br>
+</li><li>&nbsp; &nbsp; &lt;font color="Green"&gt;/* USER CODE BEGIN StartDefaultTask */&lt;/font&gt;<br>
+</li><li>&nbsp; &nbsp; &lt;font color="Green"&gt;/* Infinite loop */&lt;/font&gt;<br>
+</li><li>&nbsp; &nbsp; for(;;)<br>
+</li><li>&nbsp; &nbsp; {<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;if(mpu_read(&amp;Data) == MPU_OK)<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;{<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&lt;font color="Green"&gt;//printf("Pitch:%f\tRoll:%f\tYaw:%f\n",Data.Pitch,Data.Roll,Data.Yaw);&lt;/font&gt;<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;report_to_pc(Data.accel[0],<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; Data.accel[1],<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; Data.accel[2],<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; Data.gyro[0],<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; Data.gyro[1],<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; Data.gyro[2],<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; (short)(Data.Roll*100),<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; (short)(Data.Pitch*100),<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; (short)(Data.Yaw*100));<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;}<br>
+</li><li>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;osDelay(10);<br>
+</li><li>&nbsp; &nbsp; }<br>
+</li><li>&nbsp; &nbsp; &lt;font color="Green"&gt;/* USER CODE END StartDefaultTask */&lt;/font&gt;<br>
+</li><li>}</li></ol></div><em onclick="copycode($(&#39;code_O59&#39;));">复制代码</em></div>我这里是反数据上传到匿名四轴的上位机观看状态数据。效果视频<br>
+<span id="flv_QPK"><embed width="800" height="484" allownetworking="internal" allowscriptaccess="never" src="https://player.youku.com/player.php/sid/XMTM3MDI0NDM3Ng==.html/v.swf" quality="high" bgcolor="#ffffff" wmode="transparent" allowfullscreen="true" type="application/x-shockwave-flash"></span><script type="text/javascript" reload="1">$('flv_QPK').innerHTML=(mobileplayer() ? "<iframe height='484' width='800' src='https://player.youku.com/embed/XMTM3MDI0NDM3Ng==.html' frameborder=0 allowfullscreen></iframe>" : AC_FL_RunContent('width', '800', 'height', '484', 'allowNetworking', 'internal', 'allowScriptAccess', 'never', 'src', 'https://player.youku.com/player.php/sid/XMTM3MDI0NDM3Ng==.html/v.swf', 'quality', 'high', 'bgcolor', '#ffffff', 'wmode', 'transparent', 'allowfullscreen', 'true'));</script><br>
+<br>
+<br>
+<br>
+
+
+
+<div style="color:#CDCDCD;margin-top:30px;">此帖出自<a href="http://bbs.eeworld.com.cn/forum-126-1.html" style="color:#CDCDCD;">stm32/stm8论坛</a></div>
+
+
+
+</td></tr></tbody></table>
+
+<div class="ptg mbm mtn">
+<a title="软件" href="http://bbs.eeworld.com.cn/tag_%E8%BD%AF%E4%BB%B6.html" target="_blank">软件</a>, <a title="机器人" href="http://bbs.eeworld.com.cn/tag_%E6%9C%BA%E5%99%A8%E4%BA%BA.html" target="_blank">机器人</a></div>
+
+</div>
+<div id="comment_1939173" class="cm">
+</div>
+
+<div id="post_rate_div_1939173"></div>
+
+<style type="text/css">
+  .relativepostz li a{
+    background: url("http://cache.soso.com/30d/img/discuz/dot.png") no-repeat scroll 10px 5px rgba(0, 0, 0, 0);
+    color: #333333;
+    height: 19px;
+    margin-bottom: 1px;
+    padding-left: 20px;
+    text-decoration: none;  
+  }
+  
+  .relativepostz li{
+     text-overflow: ellipsis;
+ overflow:hidden;
+ white-space:nowrap;
+ height:18px;
+ margin:5px 0;
+  }
+
+  .relativepostz li a:hover {
+text-decoration: underline;
+  }
+  
+  .relativepostz .left_item li{
+     border-left: 1px dashed #B5BCC0;	 
+  }
+  
+  .relativepostz .left_item li img{
+     vertical-align:middle;
+  }  
+  
+</style>
+
+ <div style="clear:both;background: none repeat scroll 0 0 #EEF7FC;border: 1px solid #94CFDD;padding: 9px 10px 10px;height:130px;" class="relativepostz">
+     <div style="float:left;width:33%;">
+    <h3><a href="http://bbs.eeworld.com.cn/forum.php?mod=eeworldactivity" target="_blank">最新活动</a></h3>
+<ul>
+              <li><a href="http://edm.eeworld.com.cn/edm/Tek-TypeC-20180328/index.html" target="_blank" title="看视频抽好礼：Type-C承载的高速串行标准，功能多样，挑战也不小">看视频抽好礼：Type-C承载的高速串行标准，功能多样，挑战也不小</a></li>
+       <li><a href="http://bbs.eeworld.com.cn/thread-642492-1-1.html" target="_blank" title="#Micropython大作战#第一弹：动起来，大家一起来DIY">#Micropython大作战#第一弹：动起来，大家一起来DIY</a></li>
+       <li><a href="http://www.eeworld.com.cn/a15953" target="_blank" title="推陈出“芯“——TI 带你领略智能手机黑科技5月9日 上午10:00 在线直播 预报名+看直播 好礼让你嗨翻全场！ ">推陈出“芯“——TI 带你领略智能手机黑科技5月9日 上午10:00 在线直播 预报名+看直播 好礼让你嗨翻全场！ </a></li>
+       <li><a href="http://www.eeworld.com.cn/huodong/Littelfuse-20180508/" target="_blank" title="Littelfuse有奖直播：电动车充电桩及车载充电器保护设计方案">Littelfuse有奖直播：电动车充电桩及车载充电器保护设计方案</a></li>
+       <li><a href="http://www.eeworld.com.cn/a15862" target="_blank" title="有奖直播报名：赛灵思和安富利专注嵌入式视觉应用，助力人工智能和汽车辅助驾驶！">有奖直播报名：赛灵思和安富利专注嵌入式视觉应用，助力人工智能和汽车辅助驾驶！</a></li>
+     </ul>
+ </div>
+ 
+     <div style="float:left;width:33%;" class="left_item">
+    <h3>推荐资源</h3>
+    <ul>
+                <li><a href="http://download.eeworld.com.cn/detail/lcofjp/569525" target="_blank" title="大话设计模式(带目录完整版)">&nbsp;<img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/pdf.gif" title="pdf锟侥硷拷">大话设计模式(带目录完整版)</a></li>
+          <li><a href="http://download.eeworld.com.cn/detail/lcofjp/569537" target="_blank" title="C和C++安全编码(原书第2版)">&nbsp;<img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/pdf.gif" title="pdf锟侥硷拷">C和C++安全编码(原书第2版)</a></li>
+          <li><a href="http://download.eeworld.com.cn/download/qwqwqw2088/569568" target="_blank" title="基于Altium Designer-平台电磁兼容的电路板设计(姜付鹏 PDF)">&nbsp;<img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/pdf.gif" title="pdf锟侥硷拷">基于Altium Designer-平台电磁兼容的电路板设计(姜付鹏 PDF)</a></li>
+          <li><a href="http://download.eeworld.com.cn/detail/fengwucangbo/569478" target="_blank" title="终极内存技术指南">&nbsp;<img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/pdf.gif" title="pdf锟侥硷拷">终极内存技术指南</a></li>
+          <li><a href="http://download.eeworld.com.cn/detail/%E8%80%81%E7%99%BD%E8%8F%9C/569603" target="_blank" title="机器学习深入研究">&nbsp;<img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/pdf.gif" title="pdf锟侥硷拷">机器学习深入研究</a></li>
+      </ul>
+ </div>
+ 
+     <div style="float:left;width:33%;" class="left_item">
+    <h3>相关帖子</h3>
+    <ul>
+           <li><a href="http://bbs.eeworld.com.cn/thread-475220-1-1.html" title="F7-独轮机器人 进度" target="_blank">F7-独轮机器人 进度</a></li>
+    <li><a href="http://bbs.eeworld.com.cn/thread-475780-1-1.html" title="F7 独轮机器人 进度规划" target="_blank">F7 独轮机器人 进度规划</a></li>
+    <li><a href="http://bbs.eeworld.com.cn/thread-642591-1-1.html" title="关于uint转uchar型的问题" target="_blank">关于uint转uchar型的问题</a></li>
+    <li><a href="http://bbs.eeworld.com.cn/thread-642590-1-1.html" title="基于TMS320DM642的嵌入式Web服务器设计" target="_blank">基于TMS320DM642的嵌入式Web服务器设计</a></li>
+    <li><a href="http://bbs.eeworld.com.cn/thread-642589-1-1.html" title="基于TMS320DM368的高清视频采集系统设计与实现" target="_blank">基于TMS320DM368的高清视频采集系统设计与实现</a></li>
+    </ul>
+ </div>	 
+ 
+ </div>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</td></tr>
+<tr><td class="plc plm">
+<div id="p_btn" class="mtw mbm hm cl">
+    
+<style>
+   . #jtico{background: url("http://v3.jiathis.com/code_mini/images/jiathis_ico.png") no-repeat scroll left center rgba(0, 0, 0, 0);}
+   #tshare a{margin-right:0;display: block;}
+</style>
+<div class="tshare cl" id="tshare">
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_qzone" title="分享到QQ空间"><span class="jiathis_txt jiathis_separator jtico jtico_qzone">QQ空间</span></a>
+<a class="jiathis_button_tsina" title="分享到微博"><span class="jiathis_txt jiathis_separator jtico jtico_tsina">新浪微博</span></a>
+<a class="jiathis_button_tqq" title="分享到腾讯微博"><span class="jiathis_txt jiathis_separator jtico jtico_tqq">腾讯微博</span></a>
+<a class="jiathis_button_weixin" title="分享到微信"><span class="jiathis_txt jiathis_separator jtico jtico_weixin">微信</span></a>
+<a href="http://www.jiathis.com/share?uid=2058845" id="jtico" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"><span class="jiathis_button_expanded jiathis_counter jiathis_bubble_style" id="jiathis_counter_134" title="累计分享0次">0</span></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/jia.js.下載" type="text/javascript" charset="utf-8"></script><script type="text/javascript" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/plugin.client.js.下載" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+</div>					
+
+<a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=favorite&amp;type=thread&amp;id=475972&amp;formhash=80b728bf" id="k_favorite" onclick="showWindow(this.id, this.href, &#39;get&#39;, 0);" onmouseover="this.title = $(&#39;favoritenumber&#39;).innerHTML + &#39; 人收藏&#39;" title="收藏本帖"><i><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/fav.gif" alt="收藏">收藏<span id="favoritenumber">1</span></i></a>
+<a href="http://bbs.eeworld.com.cn/drycargo/ajax_recommend_dry.php?tid=475972&amp;ruid=0&amp;formhash=80b728bf" onclick="showWindow(&#39;drythread&#39;, this.href, &#39;get&#39;, 0);" id="t-dry" title="推荐成干货" data-islogin="0"><i><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/dry.png" alt="收藏">干货<span> </span></i></a>
+<a class="sharep" href="http://bbs.eeworld.com.cn/home.php?mod=spacecp&amp;ac=share&amp;type=thread&amp;id=475972" onclick="showWindow(&#39;sharethread&#39;, this.href, &#39;get&#39;, 0);" title="分享推精华"><i><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/oshr.png" alt="分享">分享</i></a>
+</div>
+<div class="a_pb"><script type="text/javascript">BAIDU_CLB_fillSlot("5075481");</script></div><br><br><div class="a_pb"><!-- 广告位：BBS_单片机_stm32&#47;sem8_内容页_S-A5 -->
+<script type="text/javascript">BAIDU_CLB_fillSlot("202497");</script></div></td>
+</tr>
+<tr id="_postposition1939173"></tr>
+<tr>
+<td class="pls"></td>
+<td class="plc" style="overflow:visible;">
+<div class="po hin">
+<div class="pob cl">
+<em>
+<a class="fastre" href="http://bbs.eeworld.com.cn/forum.php?mod=post&amp;action=reply&amp;fid=126&amp;tid=475972&amp;reppost=1939173&amp;extra=page%3D1&amp;page=1" onclick="showWindow(&#39;reply&#39;, this.href)">回复</a>
+</em>
+
+<p>
+<a href="javascript:;" id="mgc_post_1939173" onmouseover="showMenu(this.id)" class="showmenu">使用道具</a>
+<a href="javascript:;" onclick="showWindow(&#39;miscreport1939173&#39;, &#39;misc.php?mod=report&amp;rtype=post&amp;rid=1939173&amp;tid=475972&amp;fid=126&#39;, &#39;get&#39;, -1);return false;">举报</a>
+</p>
+
+<ul id="mgc_post_1939173_menu" class="p_pop mgcmn" style="display: none;">
+<li><a href="http://home.eeworld.com.cn/home.php?mod=magic&amp;mid=bump&amp;idtype=tid&amp;id=475972" id="a_bump" onclick="showWindow(this.id, this.href)"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/bump.small.gif">提升卡</a></li>
+<li><a href="http://home.eeworld.com.cn/home.php?mod=magic&amp;mid=highlight&amp;idtype=tid&amp;id=475972" id="a_stick" onclick="showWindow(this.id, this.href)"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/highlight.small.gif">变色卡</a></li>
+<li><a href="http://home.eeworld.com.cn/home.php?mod=magic&amp;mid=jack&amp;idtype=tid&amp;id=475972" id="a_jack" onclick="showWindow(this.id, this.href)"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/jack.small.gif">千斤顶</a></li>
+</ul>
+<script type="text/javascript" reload="1">checkmgcmn('post_1939173')</script>
+</div>
+</div>
+</td>
+</tr>
+<tr class="ad">
+<td class="pls">
+</td>
+<td class="plc">
+</td>
+</tr>
+</tbody></table>
+<script type="text/javascript" reload="1">
+aimgcount[1939173] = ['218808','218807','218806','218805','218809'];
+attachimggroup(1939173);
+var aimgfid = 0;
+</script>
+</div><div id="post_1939271">    <table id="pid1939271" class="plhin" name="pid1939271" summary="pid1939271" cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="pls" rowspan="2">
+<div id="favatar1939271" class="pls favatar">
+ <div class="pi">
+<div class="authi"><a href="http://home.eeworld.com.cn/space-uid-131141.html" target="_blank" class="xw1">arthasarthas</a>
+</div>
+</div>
+<div class="p_pop blk bui card_gender_0" id="userinfo1939271" style="display: none; margin-top: -11px;">
+<div class="m z">
+<div id="userinfo1939271_ma"></div>
+</div>
+<div class="i y">
+<div>
+<strong><a href="http://home.eeworld.com.cn/space-uid-131141.html" target="_blank" class="xi2">arthasarthas</a></strong>
+<em>当前离线</em>
+</div><dl class="cl">
+<dt>最后登录</dt><dd>2017-11-7</dd>
+<dt>在线时间</dt><dd>35 小时</dd>
+<dt>注册时间</dt><dd>2009-6-10</dd>
+<dt>威望</dt><dd>72分</dd>
+<dt>芯币</dt><dd>137枚</dd>
+<dt>E金币</dt><dd>0枚<a href="http://bbs.eeworld.com.cn/thread-505119-1-1.html" target="_blank" style="text-decoration:underline;color:red;">(兑换)</a></dd>
+<dt>学分</dt><dd><a style="color:blue;" href="http://www.eeworld.com.cn/training/score/second.html#scoreintroduce" target="_blank" title="点击查看学分说明">0分</a></dd>
+<dt>好友</dt><dd><a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=131141&amp;do=friend&amp;view=me&amp;from=space" target="_blank" class="xi2">3</a></dd>
+
+<dt>积分</dt><dd><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=plugin&amp;op=credit&amp;id=eew_credits:eewzc" target="_blank" class="xi2">20</a></dd>
+</dl>
+<div class="imicn">
+<a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=131141&amp;do=profile" target="_blank" title="查看详细资料"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/userinfo.gif" alt="查看详细资料"></a>
+</div>
+<div id="avatarfeed"><span id="threadsortswait"></span></div>
+</div>
+</div>
+<div>
+<div class="avatar" onmouseover="showauthor(this, &#39;userinfo1939271&#39;)"><a href="http://home.eeworld.com.cn/space-uid-131141.html" class="avtm" target="_blank"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/avatar(1).php"></a></div>
+</div>
+<div class="tns xg2"><table cellspacing="0" cellpadding="0"><tbody><tr><th><p><a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=131141&amp;do=thread&amp;type=thread&amp;view=me&amp;from=space" class="xi2">64</a></p>TA的帖子</th><th><p><a href="http://download.eeworld.com.cn/user/arthasarthas" class="xi2">0</a></p>TA的资源</th></tr></tbody></table></div>
+<p><em><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=usergroup&amp;gid=34" target="_blank">一粒金砂（中级）</a></em></p>
+<p><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=usergroup&amp;gid=34" target="_blank"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/level1-2.jpg" alt="" class="vm"></a></p>
+
+<p><span id="g_up1939271" onmouseover="showMenu({&#39;ctrlid&#39;:this.id, &#39;pos&#39;:&#39;12!&#39;});"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/star_level2.gif" alt="Rank: 2"></span></p>
+<div id="g_up1939271_menu" class="tip tip_4" style="display: none;"><div class="tip_horn"></div><div class="tip_c">一粒金砂（中级）, 积分 72, 距离下一级还需 128 积分</div></div>
+
+
+
+<span class="pbg2" id="upgradeprogress_1939271" onmouseover="showMenu({&#39;ctrlid&#39;:this.id, &#39;pos&#39;:&#39;12!&#39;, &#39;menuid&#39;:&#39;g_up1939271_menu&#39;});"><span class="pbr2" style="width:34%;"></span></span>
+<div id="g_up1939271_menu" class="tip tip_4" style="display: none;"><div class="tip_horn"></div><div class="tip_c">一粒金砂（中级）, 积分 72, 距离下一级还需 128 积分</div></div>
+
+<ul class="xl xl2 o cl">
+<li class="pm2"><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=pm&amp;op=showmsg&amp;handlekey=showmsg_131141&amp;touid=131141&amp;pmid=0&amp;daterange=2&amp;pid=1939271&amp;tid=475972" onclick="showWindow(&#39;sendpm&#39;, this.href);" title="发消息" class="xi2">发消息</a></li>
+<li class="buddy"><a onclick="showWindow(this.id, this.href, &#39;get&#39;, 0);" id="a_friend_li_131141" href="http://bbs.eeworld.com.cn/home.php?mod=spacecp&amp;ac=friend&amp;op=add&amp;uid=131141&amp;handlekey=addfriendhk_131141">加好友</a></li>
+</ul>
+</div>
+</td>
+	
+<td class="plc">
+<div class="pi">
+<strong>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=redirect&amp;goto=findpost&amp;ptid=475972&amp;pid=1939271" id="postnum1939271" onclick="setCopy(this.href, &#39;帖子地址复制成功&#39;);return false;">
+沙发</a>
+</strong>
+<div class="pti">
+<div class="pdbt">
+</div>
+<div class="authi">
+<img class="authicn vm" id="authicon1939271" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/online_member.gif">
+<em id="authorposton1939271">发表于 2015-10-27 08:30:43</em>
+<span class="pipe">|</span>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;tid=475972&amp;page=1&amp;authorid=131141" rel="nofollow">只看该作者</a>
+</div>
+</div>
+</div><div class="pct"><link rel="stylesheet" type="text/css" href="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/markdown.css">
+<div class="pcb">
+<div class="t_fsz">
+<table cellspacing="0" cellpadding="0"><tbody><tr><td class="t_f" id="postmessage_1939271">
+<div class="a_pr" style="margin-left:10px;width:auto"><!-- 广告位：BBS_单片机_stm32&#47;sem8_内容页_S-A6 -->
+<script type="text/javascript">BAIDU_CLB_fillSlot("202498");</script></div>这个四轴的软件挺高大上，能否共享学习下，呵呵<img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/smile.gif" smilieid="1" border="0" alt=""></td></tr></tbody></table>
+
+
+</div>
+<div id="comment_1939271" class="cm">
+</div>
+
+<div id="post_rate_div_1939271"></div>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</td></tr>
+<tr><td class="plc plm">
+<br><div class="a_pb"><a href="http://bbs.eeworld.com.cn/forum-126-1.html">stm32学习</a>&nbsp;&nbsp;<a href="http://bbs.eeworld.com.cn/forum-126-1.html">stm8学习</a>&nbsp;&nbsp;<a href="http://bbs.eeworld.com.cn/forum-126-1.html">sem32</a></div><br></td>
+</tr>
+<tr id="_postposition1939271"></tr>
+<tr>
+<td class="pls"></td>
+<td class="plc" style="overflow:visible;">
+<div class="po hin">
+<div class="pob cl">
+<em>
+<a class="fastre" href="http://bbs.eeworld.com.cn/forum.php?mod=post&amp;action=reply&amp;fid=126&amp;tid=475972&amp;repquote=1939271&amp;extra=page%3D1&amp;page=1" onclick="showWindow(&#39;reply&#39;, this.href)">回复</a>
+</em>
+
+<p>
+<a href="javascript:;" id="mgc_post_1939271" onmouseover="showMenu(this.id)" class="showmenu" style="display: none;"></a>
+<a href="javascript:;" onclick="showWindow(&#39;miscreport1939271&#39;, &#39;misc.php?mod=report&amp;rtype=post&amp;rid=1939271&amp;tid=475972&amp;fid=126&#39;, &#39;get&#39;, -1);return false;">举报</a>
+</p>
+
+<ul id="mgc_post_1939271_menu" class="p_pop mgcmn" style="display: none;">
+</ul>
+<script type="text/javascript" reload="1">checkmgcmn('post_1939271')</script>
+</div>
+</div>
+</td>
+</tr>
+<tr class="ad">
+<td class="pls">
+</td>
+<td class="plc">
+</td>
+</tr>
+</tbody></table>
+</div><div id="post_1939276">    <table id="pid1939276" class="plhin" name="pid1939276" summary="pid1939276" cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="pls" rowspan="2">
+<div id="favatar1939276" class="pls favatar">
+ <div class="pi">
+<div class="authi"><a href="http://home.eeworld.com.cn/space-uid-569679.html" target="_blank" class="xw1">紫阳大仙</a>
+</div>
+</div>
+<div class="p_pop blk bui card_gender_0" id="userinfo1939276" style="display: none; margin-top: -11px;">
+<div class="m z">
+<div id="userinfo1939276_ma"></div>
+</div>
+<div class="i y">
+<div>
+<strong><a href="http://home.eeworld.com.cn/space-uid-569679.html" target="_blank" class="xi2">紫阳大仙</a></strong>
+<em>当前离线</em>
+</div><dl class="cl">
+<dt>最后登录</dt><dd>2016-8-26</dd>
+<dt>在线时间</dt><dd>31 小时</dd>
+<dt>注册时间</dt><dd>2014-8-12</dd>
+<dt>威望</dt><dd>8分</dd>
+<dt>芯币</dt><dd>53枚</dd>
+<dt>E金币</dt><dd>0枚<a href="http://bbs.eeworld.com.cn/thread-505119-1-1.html" target="_blank" style="text-decoration:underline;color:red;">(兑换)</a></dd>
+<dt>学分</dt><dd><a style="color:blue;" href="http://www.eeworld.com.cn/training/score/second.html#scoreintroduce" target="_blank" title="点击查看学分说明">0分</a></dd>
+<dt>好友</dt><dd><a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=569679&amp;do=friend&amp;view=me&amp;from=space" target="_blank" class="xi2">0</a></dd>
+
+<dt>积分</dt><dd><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=plugin&amp;op=credit&amp;id=eew_credits:eewzc" target="_blank" class="xi2">0</a></dd>
+</dl>
+<div class="imicn">
+<a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=569679&amp;do=profile" target="_blank" title="查看详细资料"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/userinfo.gif" alt="查看详细资料"></a>
+</div>
+<div id="avatarfeed"><span id="threadsortswait"></span></div>
+</div>
+</div>
+<div>
+<div class="avatar" onmouseover="showauthor(this, &#39;userinfo1939276&#39;)"><a href="http://home.eeworld.com.cn/space-uid-569679.html" class="avtm" target="_blank"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/avatar(2).php"></a></div>
+</div>
+<div class="tns xg2"><table cellspacing="0" cellpadding="0"><tbody><tr><th><p><a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=569679&amp;do=thread&amp;type=thread&amp;view=me&amp;from=space" class="xi2">14</a></p>TA的帖子</th><th><p><a href="http://download.eeworld.com.cn/user/%E7%B4%AB%E9%98%B3%E5%A4%A7%E4%BB%99" class="xi2">0</a></p>TA的资源</th></tr></tbody></table></div>
+<p><em><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=usergroup&amp;gid=34" target="_blank">一粒金砂（中级）</a></em></p>
+<p><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=usergroup&amp;gid=34" target="_blank"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/level1-2.jpg" alt="" class="vm"></a></p>
+
+<p><span id="g_up1939276" onmouseover="showMenu({&#39;ctrlid&#39;:this.id, &#39;pos&#39;:&#39;12!&#39;});"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/star_level2.gif" alt="Rank: 2"></span></p>
+<div id="g_up1939276_menu" class="tip tip_4" style="display: none;"><div class="tip_horn"></div><div class="tip_c">一粒金砂（中级）, 积分 8, 距离下一级还需 192 积分</div></div>
+
+
+
+<span class="pbg2" id="upgradeprogress_1939276" onmouseover="showMenu({&#39;ctrlid&#39;:this.id, &#39;pos&#39;:&#39;12!&#39;, &#39;menuid&#39;:&#39;g_up1939276_menu&#39;});"><span class="pbr2" style="width:2%;"></span></span>
+<div id="g_up1939276_menu" class="tip tip_4" style="display: none;"><div class="tip_horn"></div><div class="tip_c">一粒金砂（中级）, 积分 8, 距离下一级还需 192 积分</div></div>
+
+<ul class="xl xl2 o cl">
+<li class="pm2"><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=pm&amp;op=showmsg&amp;handlekey=showmsg_569679&amp;touid=569679&amp;pmid=0&amp;daterange=2&amp;pid=1939276&amp;tid=475972" onclick="showWindow(&#39;sendpm&#39;, this.href);" title="发消息" class="xi2">发消息</a></li>
+<li class="buddy"><a onclick="showWindow(this.id, this.href, &#39;get&#39;, 0);" id="a_friend_li_569679" href="http://bbs.eeworld.com.cn/home.php?mod=spacecp&amp;ac=friend&amp;op=add&amp;uid=569679&amp;handlekey=addfriendhk_569679">加好友</a></li>
+</ul>
+</div>
+</td>
+	
+<td class="plc">
+<div class="pi">
+<strong>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=redirect&amp;goto=findpost&amp;ptid=475972&amp;pid=1939276" id="postnum1939276" onclick="setCopy(this.href, &#39;帖子地址复制成功&#39;);return false;">
+板凳</a>
+</strong>
+<div class="pti">
+<div class="pdbt">
+</div>
+<div class="authi">
+<img class="authicn vm" id="authicon1939276" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/online_member.gif">
+<em id="authorposton1939276">发表于 2015-10-27 08:36:56</em>
+<span class="pipe">|</span>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;tid=475972&amp;page=1&amp;authorid=569679" rel="nofollow">只看该作者</a>
+</div>
+</div>
+</div><div class="pct"><link rel="stylesheet" type="text/css" href="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/markdown.css">
+<div class="pcb">
+<div class="t_fsz">
+<table cellspacing="0" cellpadding="0"><tbody><tr><td class="t_f" id="postmessage_1939276">
+学习一下</td></tr></tbody></table>
+
+
+</div>
+<div id="comment_1939276" class="cm">
+</div>
+
+<div id="post_rate_div_1939276"></div>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</td></tr>
+<tr><td class="plc plm">
+<br><div class="a_pb"><a href="http://bbs.eeworld.com.cn/forum-126-1.html">stm32论坛</a>&nbsp;&nbsp;<a href="http://bbs.eeworld.com.cn/forum-126-1.html">stm8论坛</a>&nbsp;&nbsp;<a href="http://bbs.eeworld.com.cn/forum-126-1.html">stm32开发</a>&nbsp;&nbsp;<a href="http://bbs.eeworld.com.cn/forum-126-1.html">stm8开发</a>&nbsp;&nbsp;<a href="http://bbs.eeworld.com.cn/thread-485276-1-1.html">MicroPython教程</a>&nbsp;&nbsp;<a href="http://bbs.eeworld.com.cn/thread-485276-1-1.html">MicroPython教程论坛</a></div><br></td>
+</tr>
+<tr id="_postposition1939276"></tr>
+<tr>
+<td class="pls"></td>
+<td class="plc" style="overflow:visible;">
+<div class="po hin">
+<div class="pob cl">
+<em>
+<a class="fastre" href="http://bbs.eeworld.com.cn/forum.php?mod=post&amp;action=reply&amp;fid=126&amp;tid=475972&amp;repquote=1939276&amp;extra=page%3D1&amp;page=1" onclick="showWindow(&#39;reply&#39;, this.href)">回复</a>
+</em>
+
+<p>
+<a href="javascript:;" id="mgc_post_1939276" onmouseover="showMenu(this.id)" class="showmenu" style="display: none;"></a>
+<a href="javascript:;" onclick="showWindow(&#39;miscreport1939276&#39;, &#39;misc.php?mod=report&amp;rtype=post&amp;rid=1939276&amp;tid=475972&amp;fid=126&#39;, &#39;get&#39;, -1);return false;">举报</a>
+</p>
+
+<ul id="mgc_post_1939276_menu" class="p_pop mgcmn" style="display: none;">
+</ul>
+<script type="text/javascript" reload="1">checkmgcmn('post_1939276')</script>
+</div>
+</div>
+</td>
+</tr>
+<tr class="ad">
+<td class="pls">
+</td>
+<td class="plc">
+</td>
+</tr>
+</tbody></table>
+</div><div id="post_1939310">    <table id="pid1939310" class="plhin" name="pid1939310" summary="pid1939310" cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="pls" rowspan="2">
+<div id="favatar1939310" class="pls favatar">
+ <div class="pi">
+<div class="authi"><a href="http://home.eeworld.com.cn/space-uid-530227.html" target="_blank" class="xw1">nmg</a>
+</div>
+</div>
+<div class="p_pop blk bui card_gender_0" id="userinfo1939310" style="display: none; margin-top: -11px;">
+<div class="m z">
+<div id="userinfo1939310_ma"></div>
+</div>
+<div class="i y">
+<div>
+<strong><a href="http://home.eeworld.com.cn/space-uid-530227.html" target="_blank" class="xi2">nmg</a></strong>
+<em>当前离线</em>
+</div><dl class="cl">
+<dt>最后登录</dt><dd>2018-4-23</dd>
+<dt>在线时间</dt><dd>3087 小时</dd>
+<dt>注册时间</dt><dd>2014-2-26</dd>
+<dt>威望</dt><dd>1870分</dd>
+<dt>芯币</dt><dd>12869枚</dd>
+<dt>E金币</dt><dd>0枚<a href="http://bbs.eeworld.com.cn/thread-505119-1-1.html" target="_blank" style="text-decoration:underline;color:red;">(兑换)</a></dd>
+<dt>学分</dt><dd><a style="color:blue;" href="http://www.eeworld.com.cn/training/score/second.html#scoreintroduce" target="_blank" title="点击查看学分说明">0分</a></dd>
+<dt>好友</dt><dd><a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=530227&amp;do=friend&amp;view=me&amp;from=space" target="_blank" class="xi2">42</a></dd>
+
+<dt>积分</dt><dd><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=plugin&amp;op=credit&amp;id=eew_credits:eewzc" target="_blank" class="xi2">6054</a></dd>
+</dl>
+<div class="imicn">
+<a href="http://wpa.qq.com/msgrd?V=3&amp;Uin=1111111111&amp;Site=%B5%E7%D7%D3%B9%A4%B3%CC%CA%C0%BD%E7-%C2%DB%CC%B3&amp;Menu=yes&amp;from=discuz" target="_blank" title="QQ"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/qq.gif" alt="QQ"></a><a href="http:" target="_blank" title="查看个人网站"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/forumlink.gif" alt="查看个人网站"></a><a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=530227&amp;do=profile" target="_blank" title="查看详细资料"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/userinfo.gif" alt="查看详细资料"></a>
+</div>
+<div id="avatarfeed"><span id="threadsortswait"></span></div>
+</div>
+</div>
+<div>
+<div class="avatar" onmouseover="showauthor(this, &#39;userinfo1939310&#39;)"><a href="http://home.eeworld.com.cn/space-uid-530227.html" class="avtm" target="_blank"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/avatar(3).php"></a></div>
+</div>
+<div class="tns xg2"><table cellspacing="0" cellpadding="0"><tbody><tr><th><p><a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=530227&amp;do=thread&amp;type=thread&amp;view=me&amp;from=space" class="xi2">3204</a></p>TA的帖子</th><th><p><a href="http://download.eeworld.com.cn/user/nmg" class="xi2">155</a></p>TA的资源</th></tr></tbody></table></div>
+<p><em><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=usergroup&amp;gid=1" target="_blank">管理员</a></em></p>
+<p><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=usergroup&amp;gid=1" target="_blank"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/level1-16.jpg" alt="" class="vm"></a></p>
+
+<p><span><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/star_level3.gif" alt="Rank: 13"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/star_level3.gif" alt="Rank: 13"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/star_level3.gif" alt="Rank: 13"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/star_level1.gif" alt="Rank: 13"></span></p>
+
+
+
+
+<ul class="xl xl2 o cl">
+<li class="pm2"><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=pm&amp;op=showmsg&amp;handlekey=showmsg_530227&amp;touid=530227&amp;pmid=0&amp;daterange=2&amp;pid=1939310&amp;tid=475972" onclick="showWindow(&#39;sendpm&#39;, this.href);" title="发消息" class="xi2">发消息</a></li>
+<li class="buddy"><a onclick="showWindow(this.id, this.href, &#39;get&#39;, 0);" id="a_friend_li_530227" href="http://bbs.eeworld.com.cn/home.php?mod=spacecp&amp;ac=friend&amp;op=add&amp;uid=530227&amp;handlekey=addfriendhk_530227">加好友</a></li>
+</ul>
+</div>
+</td>
+	
+<td class="plc">
+<div class="pi">
+<strong>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=redirect&amp;goto=findpost&amp;ptid=475972&amp;pid=1939310" id="postnum1939310" onclick="setCopy(this.href, &#39;帖子地址复制成功&#39;);return false;">
+<em>4</em>楼</a>
+</strong>
+<div class="pti">
+<div class="pdbt">
+</div>
+<div class="authi">
+<img class="authicn vm" id="authicon1939310" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/online_admin.gif">
+<em id="authorposton1939310">发表于 2015-10-27 09:56:02</em>
+<span class="pipe">|</span>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;tid=475972&amp;page=1&amp;authorid=530227" rel="nofollow">只看该作者</a>
+</div>
+</div>
+</div><div class="pct"><link rel="stylesheet" type="text/css" href="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/markdown.css">
+<div class="pcb">
+<div class="t_fsz">
+<table cellspacing="0" cellpadding="0"><tbody><tr><td class="t_f" id="postmessage_1939310">
+哈哈，过来看热闹<br>
+<br>
+视频要是有配音就好了<img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/loveliness.gif" smilieid="28" border="0" alt=""></td></tr></tbody></table>
+
+
+</div>
+<div id="comment_1939310" class="cm">
+</div>
+
+<div id="post_rate_div_1939310"></div>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</td></tr>
+<tr><td class="plc plm">
+<br><br></td>
+</tr>
+<tr id="_postposition1939310"></tr>
+<tr>
+<td class="pls"></td>
+<td class="plc" style="overflow:visible;">
+<div class="po hin">
+<div class="pob cl">
+<em>
+<a class="fastre" href="http://bbs.eeworld.com.cn/forum.php?mod=post&amp;action=reply&amp;fid=126&amp;tid=475972&amp;repquote=1939310&amp;extra=page%3D1&amp;page=1" onclick="showWindow(&#39;reply&#39;, this.href)">回复</a>
+</em>
+
+<p>
+<a href="javascript:;" id="mgc_post_1939310" onmouseover="showMenu(this.id)" class="showmenu" style="display: none;"></a>
+<a href="javascript:;" onclick="showWindow(&#39;miscreport1939310&#39;, &#39;misc.php?mod=report&amp;rtype=post&amp;rid=1939310&amp;tid=475972&amp;fid=126&#39;, &#39;get&#39;, -1);return false;">举报</a>
+</p>
+
+<ul id="mgc_post_1939310_menu" class="p_pop mgcmn" style="display: none;">
+</ul>
+<script type="text/javascript" reload="1">checkmgcmn('post_1939310')</script>
+</div>
+</div>
+</td>
+</tr>
+<tr class="ad">
+<td class="pls">
+</td>
+<td class="plc">
+</td>
+</tr>
+</tbody></table>
+</div><div id="post_1943086">    <table id="pid1943086" class="plhin" name="pid1943086" summary="pid1943086" cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="pls" rowspan="2">
+<div id="favatar1943086" class="pls favatar">
+ <div class="pi">
+<div class="authi"><a href="http://home.eeworld.com.cn/space-uid-610867.html" target="_blank" class="xw1">天天好心情亲</a>
+</div>
+</div>
+<div class="p_pop blk bui card_gender_0" id="userinfo1943086" style="display: none; margin-top: -11px;">
+<div class="m z">
+<div id="userinfo1943086_ma"></div>
+</div>
+<div class="i y">
+<div>
+<strong><a href="http://home.eeworld.com.cn/space-uid-610867.html" target="_blank" class="xi2">天天好心情亲</a></strong>
+<em>当前离线</em>
+</div><dl class="cl">
+<dt>最后登录</dt><dd>2017-9-29</dd>
+<dt>在线时间</dt><dd>98 小时</dd>
+<dt>注册时间</dt><dd>2015-3-29</dd>
+<dt>威望</dt><dd>20分</dd>
+<dt>芯币</dt><dd>133枚</dd>
+<dt>E金币</dt><dd>0枚<a href="http://bbs.eeworld.com.cn/thread-505119-1-1.html" target="_blank" style="text-decoration:underline;color:red;">(兑换)</a></dd>
+<dt>学分</dt><dd><a style="color:blue;" href="http://www.eeworld.com.cn/training/score/second.html#scoreintroduce" target="_blank" title="点击查看学分说明">0分</a></dd>
+<dt>好友</dt><dd><a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=610867&amp;do=friend&amp;view=me&amp;from=space" target="_blank" class="xi2">1</a></dd>
+
+<dt>积分</dt><dd><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=plugin&amp;op=credit&amp;id=eew_credits:eewzc" target="_blank" class="xi2">2</a></dd>
+</dl>
+<div class="imicn">
+<a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=610867&amp;do=profile" target="_blank" title="查看详细资料"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/userinfo.gif" alt="查看详细资料"></a>
+</div>
+<div id="avatarfeed"><span id="threadsortswait"></span></div>
+</div>
+</div>
+<div>
+<div class="avatar" onmouseover="showauthor(this, &#39;userinfo1943086&#39;)"><a href="http://home.eeworld.com.cn/space-uid-610867.html" class="avtm" target="_blank"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/avatar(4).php"></a></div>
+</div>
+<div class="tns xg2"><table cellspacing="0" cellpadding="0"><tbody><tr><th><p><a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=610867&amp;do=thread&amp;type=thread&amp;view=me&amp;from=space" class="xi2">85</a></p>TA的帖子</th><th><p><a href="http://download.eeworld.com.cn/user/%E5%A4%A9%E5%A4%A9%E5%A5%BD%E5%BF%83%E6%83%85%E4%BA%B2" class="xi2">0</a></p>TA的资源</th></tr></tbody></table></div>
+<p><em><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=usergroup&amp;gid=34" target="_blank">一粒金砂（中级）</a></em></p>
+<p><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=usergroup&amp;gid=34" target="_blank"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/level1-2.jpg" alt="" class="vm"></a></p>
+
+<p><span id="g_up1943086" onmouseover="showMenu({&#39;ctrlid&#39;:this.id, &#39;pos&#39;:&#39;12!&#39;});"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/star_level2.gif" alt="Rank: 2"></span></p>
+<div id="g_up1943086_menu" class="tip tip_4" style="display: none;"><div class="tip_horn"></div><div class="tip_c">一粒金砂（中级）, 积分 20, 距离下一级还需 180 积分</div></div>
+
+
+
+<span class="pbg2" id="upgradeprogress_1943086" onmouseover="showMenu({&#39;ctrlid&#39;:this.id, &#39;pos&#39;:&#39;12!&#39;, &#39;menuid&#39;:&#39;g_up1943086_menu&#39;});"><span class="pbr2" style="width:7%;"></span></span>
+<div id="g_up1943086_menu" class="tip tip_4" style="display: none;"><div class="tip_horn"></div><div class="tip_c">一粒金砂（中级）, 积分 20, 距离下一级还需 180 积分</div></div>
+
+<ul class="xl xl2 o cl">
+<li class="pm2"><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=pm&amp;op=showmsg&amp;handlekey=showmsg_610867&amp;touid=610867&amp;pmid=0&amp;daterange=2&amp;pid=1943086&amp;tid=475972" onclick="showWindow(&#39;sendpm&#39;, this.href);" title="发消息" class="xi2">发消息</a></li>
+<li class="buddy"><a onclick="showWindow(this.id, this.href, &#39;get&#39;, 0);" id="a_friend_li_610867" href="http://bbs.eeworld.com.cn/home.php?mod=spacecp&amp;ac=friend&amp;op=add&amp;uid=610867&amp;handlekey=addfriendhk_610867">加好友</a></li>
+</ul>
+</div>
+</td>
+	
+<td class="plc">
+<div class="pi">
+<strong>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=redirect&amp;goto=findpost&amp;ptid=475972&amp;pid=1943086" id="postnum1943086" onclick="setCopy(this.href, &#39;帖子地址复制成功&#39;);return false;">
+<em>5</em>楼</a>
+</strong>
+<div class="pti">
+<div class="pdbt">
+</div>
+<div class="authi">
+<img class="authicn vm" id="authicon1943086" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/online_member.gif">
+<em id="authorposton1943086">发表于 2015-11-5 08:39:15</em>
+<span class="pipe">|</span>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;tid=475972&amp;page=1&amp;authorid=610867" rel="nofollow">只看该作者</a>
+</div>
+</div>
+</div><div class="pct"><link rel="stylesheet" type="text/css" href="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/markdown.css">
+<div class="pcb">
+<div class="t_fsz">
+<table cellspacing="0" cellpadding="0"><tbody><tr><td class="t_f" id="postmessage_1943086">
+楼主&nbsp;&nbsp;我那个添加的时候好像无法使用模拟I2C 请问 是怎么回事？？？？寄存器没有设置的问题？？？？？？？</td></tr></tbody></table>
+
+
+</div>
+<div id="comment_1943086" class="cm">
+<h3 class="psth xs1"><span class="icon_ring vm"></span>点评</h3>
+<div class="pstl xs1 cl">
+<div class="psta vm">
+<a href="http://home.eeworld.com.cn/space-uid-528325.html" c="1" mid="card_5457"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/avatar(5).php"></a>
+<a href="http://home.eeworld.com.cn/space-uid-528325.html" class="xi2 xw1">ketose</a>
+</div>
+<div class="psti">
+这个例子是硬件I2C，没有模拟I2C。模拟I2C应该是自己用IO口来处理，基本上和这个没有多大关系了。
+现在STM32的硬件I2C挺好用的，所以能使用硬件就使用硬件。&nbsp;
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=redirect&amp;goto=findpost&amp;pid=1943188&amp;ptid=475972" class="xi2">详情</a>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=post&amp;action=reply&amp;fid=126&amp;tid=475972&amp;repquote=1943188&amp;extra=page%3D1&amp;page=1" class="xi2" onclick="showWindow(&#39;reply&#39;, this.href)">回复</a>
+<span class="xg1">
+发表于 2015-11-5 10:45</span>
+</div>
+</div>
+</div>
+
+<div id="post_rate_div_1943086"></div>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</td></tr>
+<tr><td class="plc plm">
+<br><br></td>
+</tr>
+<tr id="_postposition1943086"></tr>
+<tr>
+<td class="pls"></td>
+<td class="plc" style="overflow:visible;">
+<div class="po hin">
+<div class="pob cl">
+<em>
+<a class="fastre" href="http://bbs.eeworld.com.cn/forum.php?mod=post&amp;action=reply&amp;fid=126&amp;tid=475972&amp;repquote=1943086&amp;extra=page%3D1&amp;page=1" onclick="showWindow(&#39;reply&#39;, this.href)">回复</a>
+</em>
+
+<p>
+<a href="javascript:;" id="mgc_post_1943086" onmouseover="showMenu(this.id)" class="showmenu" style="display: none;"></a>
+<a href="javascript:;" onclick="showWindow(&#39;miscreport1943086&#39;, &#39;misc.php?mod=report&amp;rtype=post&amp;rid=1943086&amp;tid=475972&amp;fid=126&#39;, &#39;get&#39;, -1);return false;">举报</a>
+</p>
+
+<ul id="mgc_post_1943086_menu" class="p_pop mgcmn" style="display: none;">
+</ul>
+<script type="text/javascript" reload="1">checkmgcmn('post_1943086')</script>
+</div>
+</div>
+</td>
+</tr>
+<tr class="ad">
+<td class="pls">
+</td>
+<td class="plc">
+</td>
+</tr>
+</tbody></table>
+</div><div id="post_1943188">    <table id="pid1943188" class="plhin" name="pid1943188" summary="pid1943188" cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="pls" rowspan="2">
+<div id="favatar1943188" class="pls favatar">
+ <a name="lastpost"></a><div class="pi">
+<div class="authi"><a href="http://home.eeworld.com.cn/space-uid-528325.html" target="_blank" class="xw1">ketose</a>
+</div>
+</div>
+<div class="p_pop blk bui card_gender_0" id="userinfo1943188" style="display: none; margin-top: -11px;">
+<div class="m z">
+<div id="userinfo1943188_ma"></div>
+</div>
+<div class="i y">
+<div>
+<strong><a href="http://home.eeworld.com.cn/space-uid-528325.html" target="_blank" class="xi2">ketose</a></strong>
+<em>当前离线</em>
+</div><dl class="cl">
+<dt>最后登录</dt><dd>2018-4-20</dd>
+<dt>在线时间</dt><dd>441 小时</dd>
+<dt>注册时间</dt><dd>2014-2-17</dd>
+<dt>威望</dt><dd>240分</dd>
+<dt>芯币</dt><dd>2894枚</dd>
+<dt>E金币</dt><dd>44枚<a href="http://bbs.eeworld.com.cn/thread-505119-1-1.html" target="_blank" style="text-decoration:underline;color:red;">(兑换)</a></dd>
+<dt>学分</dt><dd><a style="color:blue;" href="http://www.eeworld.com.cn/training/score/second.html#scoreintroduce" target="_blank" title="点击查看学分说明">0分</a></dd>
+<dt>好友</dt><dd><a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=528325&amp;do=friend&amp;view=me&amp;from=space" target="_blank" class="xi2">5</a></dd>
+
+<dt>积分</dt><dd><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=plugin&amp;op=credit&amp;id=eew_credits:eewzc" target="_blank" class="xi2">299</a></dd>
+</dl>
+<div class="imicn">
+<a href="http://wpa.qq.com/msgrd?V=3&amp;Uin=25656016&amp;Site=%B5%E7%D7%D3%B9%A4%B3%CC%CA%C0%BD%E7-%C2%DB%CC%B3&amp;Menu=yes&amp;from=discuz" target="_blank" title="QQ"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/qq.gif" alt="QQ"></a><a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=528325&amp;do=profile" target="_blank" title="查看详细资料"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/userinfo.gif" alt="查看详细资料"></a>
+</div>
+<div id="avatarfeed"><span id="threadsortswait"></span></div>
+</div>
+</div>
+<div>
+<div class="avatar" onmouseover="showauthor(this, &#39;userinfo1943188&#39;)"><a href="http://home.eeworld.com.cn/space-uid-528325.html" class="avtm" target="_blank"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/avatar.php"></a></div>
+</div>
+<div class="tns xg2"><table cellspacing="0" cellpadding="0"><tbody><tr><th><p><a href="http://home.eeworld.com.cn/home.php?mod=space&amp;uid=528325&amp;do=thread&amp;type=thread&amp;view=me&amp;from=space" class="xi2">538</a></p>TA的帖子</th><th><p><a href="http://download.eeworld.com.cn/user/ketose" class="xi2">20</a></p>TA的资源</th></tr></tbody></table></div>
+<p><em><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=usergroup&amp;gid=35" target="_blank">一粒金砂（高级）</a></em></p>
+<p><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=usergroup&amp;gid=35" target="_blank"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/level1-3.jpg" alt="" class="vm"></a></p>
+
+<p><span id="g_up1943188" onmouseover="showMenu({&#39;ctrlid&#39;:this.id, &#39;pos&#39;:&#39;12!&#39;});"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/star_level2.gif" alt="Rank: 3"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/star_level1.gif" alt="Rank: 3"></span></p>
+<div id="g_up1943188_menu" class="tip tip_4" style="display: none;"><div class="tip_horn"></div><div class="tip_c">一粒金砂（高级）, 积分 240, 距离下一级还需 260 积分</div></div>
+
+
+
+<span class="pbg2" id="upgradeprogress_1943188" onmouseover="showMenu({&#39;ctrlid&#39;:this.id, &#39;pos&#39;:&#39;12!&#39;, &#39;menuid&#39;:&#39;g_up1943188_menu&#39;});"><span class="pbr2" style="width:13%;"></span></span>
+<div id="g_up1943188_menu" class="tip tip_4" style="display: none;"><div class="tip_horn"></div><div class="tip_c">一粒金砂（高级）, 积分 240, 距离下一级还需 260 积分</div></div>
+
+<ul class="xl xl2 o cl">
+<li class="pm2"><a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=pm&amp;op=showmsg&amp;handlekey=showmsg_528325&amp;touid=528325&amp;pmid=0&amp;daterange=2&amp;pid=1943188&amp;tid=475972" onclick="showWindow(&#39;sendpm&#39;, this.href);" title="发消息" class="xi2">发消息</a></li>
+<li class="buddy"><a onclick="showWindow(this.id, this.href, &#39;get&#39;, 0);" id="a_friend_li_528325" href="http://bbs.eeworld.com.cn/home.php?mod=spacecp&amp;ac=friend&amp;op=add&amp;uid=528325&amp;handlekey=addfriendhk_528325">加好友</a></li>
+</ul>
+</div>
+</td>
+	
+<td class="plc">
+<div class="pi">
+<strong>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=redirect&amp;goto=findpost&amp;ptid=475972&amp;pid=1943188" id="postnum1943188" onclick="setCopy(this.href, &#39;帖子地址复制成功&#39;);return false;">
+<em>6</em>楼</a>
+</strong>
+<div class="pti">
+<div class="pdbt">
+</div>
+<div class="authi">
+<img class="authicn vm" id="authicon1943188" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/ico_lz.png">
+&nbsp;楼主<span class="pipe">|</span>
+<em id="authorposton1943188">发表于 2015-11-5 10:45:36</em>
+<span class="pipe">|</span>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;tid=475972&amp;page=1&amp;authorid=528325" rel="nofollow">只看该作者</a>
+</div>
+</div>
+</div><div class="pct"><link rel="stylesheet" type="text/css" href="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/markdown.css">
+<div class="pcb">
+<div class="t_fsz">
+<table cellspacing="0" cellpadding="0"><tbody><tr><td class="t_f" id="postmessage_1943188">
+<div class="quote"><blockquote><font size="2"><a href="http://bbs.eeworld.com.cn/forum.php?mod=redirect&amp;goto=findpost&amp;pid=1943086&amp;ptid=475972" target="_blank"><font color="#999999">天天好心情亲 发表于 2015-11-5 08:39</font></a></font><br>
+楼主&nbsp;&nbsp;我那个添加的时候好像无法使用模拟I2C 请问 是怎么回事？？？？寄存器没有设置的问题？？？？？？？</blockquote></div><br>
+这个例子是硬件I2C，没有模拟I2C。模拟I2C应该是自己用IO口来处理，基本上和这个没有多大关系了。<br>
+现在STM32的硬件I2C挺好用的，所以能使用硬件就使用硬件。</td></tr></tbody></table>
+
+
+</div>
+<div id="comment_1943188" class="cm">
+</div>
+
+<div id="post_rate_div_1943188"></div>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</td></tr>
+<tr><td class="plc plm">
+<br><br></td>
+</tr>
+<tr id="_postposition1943188"></tr>
+<tr>
+<td class="pls"></td>
+<td class="plc" style="overflow:visible;">
+<div class="po hin">
+<div class="pob cl">
+<em>
+<a class="fastre" href="http://bbs.eeworld.com.cn/forum.php?mod=post&amp;action=reply&amp;fid=126&amp;tid=475972&amp;repquote=1943188&amp;extra=page%3D1&amp;page=1" onclick="showWindow(&#39;reply&#39;, this.href)">回复</a>
+</em>
+
+<p>
+<a href="javascript:;" id="mgc_post_1943188" onmouseover="showMenu(this.id)" class="showmenu" style="display: none;"></a>
+<a href="javascript:;" onclick="showWindow(&#39;miscreport1943188&#39;, &#39;misc.php?mod=report&amp;rtype=post&amp;rid=1943188&amp;tid=475972&amp;fid=126&#39;, &#39;get&#39;, -1);return false;">举报</a>
+</p>
+
+<ul id="mgc_post_1943188_menu" class="p_pop mgcmn" style="display: none;">
+</ul>
+<script type="text/javascript" reload="1">checkmgcmn('post_1943188')</script>
+</div>
+</div>
+</td>
+</tr>
+<tr class="ad">
+<td class="pls">
+</td>
+<td class="plc">
+</td>
+</tr>
+</tbody></table>
+</div><div id="postlistreply" class="pl"><div id="post_new" class="viewthread_table" style="display: none"></div></div>
+</div>
+
+
+
+
+
+
+
+
+<form method="post" autocomplete="off" name="modactions" id="modactions">
+<input type="hidden" name="formhash" value="80b728bf">
+<input type="hidden" name="optgroup">
+<input type="hidden" name="operation">
+<input type="hidden" name="listextra" value="page%3D1">
+<input type="hidden" name="page" value="1">
+</form>
+
+
+
+<div class="pgs mtm mbm cl">
+<span class="pgb y"><a href="http://bbs.eeworld.com.cn/forum-126-1.html">返回列表</a></span>
+<a id="newspecialtmp" onmouseover="$(&#39;newspecial&#39;).id = &#39;newspecialtmp&#39;;this.id = &#39;newspecial&#39;;showMenu({&#39;ctrlid&#39;:this.id})" onclick="showWindow(&#39;newthread&#39;, &#39;forum.php?mod=post&amp;action=newthread&amp;fid=126&#39;)" href="javascript:;" title="发新帖"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/pn_post.png" alt="发新帖"></a>
+</div>
+
+<!--[diy=diyfastposttop]--><div id="diyfastposttop" class="area"></div><!--[/diy]-->
+<script type="text/javascript">
+var postminchars = parseInt('4');
+var postmaxchars = parseInt('0');
+var disablepostctrl = parseInt('0');
+</script>
+
+<div id="f_pst" class="pl bm bmw">
+<form method="post" autocomplete="off" id="fastpostform" action="http://bbs.eeworld.com.cn/forum.php?mod=post&amp;action=reply&amp;fid=126&amp;tid=475972&amp;extra=page%3D1&amp;replysubmit=yes&amp;infloat=yes&amp;handlekey=fastpost" onsubmit="return fastpostvalidate(this)">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="pls">
+</td>
+<td class="plc">
+
+<span id="fastpostreturn"></span>
+
+
+<div class="cl">
+<div id="fastsmiliesdiv" class="y"><div id="fastsmiliesdiv_data"><div id="fastsmilies"></div></div></div><div class="hasfsl" id="fastposteditor">
+<div class="tedt mtn">
+<div class="bar">
+<span class="y">
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=post&amp;action=reply&amp;fid=126&amp;tid=475972" onclick="return switchAdvanceMode(this.href)" style="color:red;">点此添加图片或附件</a>
+</span><script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/seditor.js.下載" type="text/javascript"></script>
+<div class="fpd">
+<a href="javascript:;" title="文字加粗" class="fbld">B</a>
+<a href="javascript:;" title="设置文字颜色" class="fclr" id="fastpostforecolor">Color</a>
+<a id="fastpostimg" href="javascript:;" title="图片" class="fmg">Image</a>
+<a id="fastposturl" href="javascript:;" title="添加链接" class="flnk">Link</a>
+<a id="fastpostquote" href="javascript:;" title="引用" class="fqt">Quote</a>
+<a id="fastpostcode" style="width:20px;height:20px;background:url(&#39;static/image/common/code.gif&#39;) no-repeat;" href="javascript:;" title="代码" class="fcd">Code</a>
+<a href="javascript:;" class="fsml" id="fastpostsml">Smilies</a>
+</div></div>
+<div class="area">
+<div class="pt hm">
+您需要登录后才可以回帖 <a href="http://bbs.eeworld.com.cn/member.php?mod=logging&amp;action=login" onclick="showWindow(&#39;login&#39;, this.href)" class="xi2">登录</a> | <a href="http://bbs.eeworld.com.cn/member.php?mod=register_eeworld.php" class="xi2">注册</a>
+
+
+<a href="http://bbs.eeworld.com.cn/connect.php?mod=login&amp;op=init&amp;referer=forum.php%3Fmod%3Dviewthread%26tid%3D475972%26extra%3Dpage%253D1%26page%3D1&amp;statfrom=login" target="_top" rel="nofollow"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/qq_login.gif" class="vm"></a>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="seccheck_fastpost">
+</div>
+
+
+<input type="hidden" name="formhash" value="80b728bf">
+<input type="hidden" name="usesig" value="">
+<input type="hidden" name="subject" value="  ">
+<p class="ptm pnpost">
+<a href="http://home.eeworld.com.cn/home.php?mod=spacecp&amp;ac=credit&amp;op=rule&amp;fid=126" class="y" target="_blank">本版积分规则</a>
+<button type="button" onclick="showWindow(&#39;login&#39;, &#39;member.php?mod=logging&amp;action=login&amp;guestmessage=yes&#39;)" onmouseover="checkpostrule(&#39;seccheck_fastpost&#39;, &#39;ac=reply&#39;);this.onmouseover=null" name="replysubmit" id="fastpostsubmit" class="pn pnc vm" value="replysubmit" tabindex="5"><strong>发表回复</strong></button>
+<label for="fastpostrefresh"><input id="fastpostrefresh" type="checkbox" class="pc">回帖后跳转到最后一页</label>
+<script type="text/javascript">if(getcookie('fastpostrefresh') == 1) {$('fastpostrefresh').checked=true;}</script>
+</p>
+</td>
+</tr>
+</tbody></table>
+</form>
+</div>
+
+<script type="text/javascript">
+var connect_qzone_share_url = '';
+var connect_weibo_share_url = '';
+var connect_thread_info = {
+thread_url: 'http://bbs.eeworld.com.cn/thread-475972-1-1.html',
+thread_id: '475972',
+post_id: '',
+forum_id: '126',
+author_id: '',
+author: ''
+};
+
+connect_autoshare = '';
+connect_isbind = '';
+if(connect_autoshare == 1 && connect_isbind) {
+_attachEvent(window, 'load', function(){
+connect_share(connect_weibo_share_url, connect_openid);
+});
+}
+</script>
+
+
+<script type="text/javascript">
+new lazyload();
+</script>
+<script type="text/javascript">document.onkeyup = function(e){keyPageScroll(e, 0, 0, 'forum.php?mod=viewthread&tid=475972', 1);}</script>
+</div>
+
+
+
+
+
+<!-- JiaThis Button BEGIN -->
+ 
+<!-- JiaThis Button END -->
+
+<div class="wp mtn">
+<!--[diy=diy3]--><div id="diy3" class="area"></div><!--[/diy]-->
+</div>
+
+<script type="text/javascript">
+function succeedhandle_followmod(url, msg, values) {
+var fObj = $('followmod_'+values['fuid']);
+if(values['type'] == 'add') {
+fObj.innerHTML = '不收听';
+fObj.href = 'home.php?mod=spacecp&ac=follow&op=del&fuid='+values['fuid'];
+} else if(values['type'] == 'del') {
+fObj.innerHTML = '收听TA';
+fObj.href = 'home.php?mod=spacecp&ac=follow&op=add&hash=80b728bf&fuid='+values['fuid'];
+}
+}
+fixed_avatar([1939173,1939271,1939276,1939310,1943086,1943188], 1);
+</script>
+
+</div>
+
+	</div>
+
+
+<script type="text/javascript">var cookieLogin = Ajax("TEXT");cookieLogin.get("connect.php?mod=check&op=cookie", function() {});</script>
+
+<div id="ft" class="wp cl">
+
+<div class="wp cl">
+
+<style>
+.eew_ewm li {
+float: left;
+height: 80px;
+margin-bottom: 5px;
+padding: 5px 0 5px 17px;
+}
+ul li, .xl li {
+list-style: outside none none;
+}
+.eew_ewm li img {
+float: left;
+height: 80px;
+width: 80px;
+}
+.eew_ewm li p {
+color: #333;
+font-size: 14px;
+line-height: 30px;
+margin-left: 90px;
+padding-top: 10px;
+}
+.eew_ewm li p span {
+color: #ff0000;
+font-size: 14px;
+}
+</style>
+ <ul class="eew_ewm">
+<li>
+  <img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/dyh.jpg" alt="论坛活动 E手掌握">
+  <p>扫码关注<br>
+   <span>EEWORLD 官方微信</span>
+  </p>
+</li>
+<li>
+  <img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/xrewm.jpg" alt="EE福利  唾手可得">
+  <p>扫码关注<br>
+   <span>EE福利  唾手可得</span>
+  </p>
+</li>
+  </ul> 
+</div>
+
+<div id="flk" class="y">
+<p>
+<a href="http://bbs.eeworld.com.cn/forum.php?mod=misc&amp;action=showdarkroom">小黑屋</a><span class="pipe">|</span><a href="http://bbs.eeworld.com.cn/forum.php?mobile=yes">手机版</a><span class="pipe">|</span><a href="http://bbs.eeworld.com.cn/archiver/">Archiver</a><span class="pipe">|</span><strong><a href="http://bbs.eeworld.com.cn/" target="_blank">电子工程世界</a></strong>
+( <a href="http://www.miitbeian.gov.cn/" target="_blank">京ICP证 060456</a> )&nbsp;<a href="http://discuz.qq.com/service/security" target="_blank" title="防水墙保卫网站远离侵害"><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/security.png"></a></p>
+<p class="xs0">
+GMT+8, 2018-4-23 23:37<span id="debuginfo">
+, Processed in 0.175028 second(s), 20 queries
+, Redis On.
+</span>
+</p>
+</div>
+<div id="frt">
+<p>Powered by <strong><a href="http://bbs.eeworld.com.cn/" target="_blank">EEWORLD电子工程世界</a></strong></p>
+<p class="xs0">&#169; 2018 <a href="http://bbs.eeworld.com.cn/" target="_blank">http://bbs.eeworld.com.cn/</a></p>
+</div></div>
+
+<div id="eew_wx_show" style="position: fixed; margin: -30px 0px 0px 2px; bottom: 230px; visibility: hidden; left: auto; right: 0px;">
+    <div style="position: absolute;top: 0;right: 0;"><div id="close_eew_wx" style="background: url(&#39;static/image/common/ad_close.gif&#39;) no-repeat scroll 0 0 ;height:12px;width: 35px;cursor:pointer;"></div></div>
+    <div><img alt="微信扫描" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/wx_eew_right.jpg"></div>
+</div>
+<script type="text/javascript">
+function show_wx_pic(){
+var ft = $('ft');
+if(ft){
+var scrolltop = $('eew_wx_show');
+var viewPortHeight = parseInt(document.documentElement.clientHeight);
+var scrollHeight = parseInt(document.body.getBoundingClientRect().top);
+var basew = parseInt(ft.clientWidth);
+var sw = scrolltop.clientWidth;
+if (basew < 1000) {
+var left = parseInt(fetchOffset(ft)['left']);
+left = left < sw ? left * 2 - sw : left;
+scrolltop.style.left = ( basew + left ) + 'px';
+} else {
+scrolltop.style.left = 'auto';
+scrolltop.style.right = 0;
+}
+
+if (BROWSER.ie && BROWSER.ie < 7) {
+scrolltop.style.top = viewPortHeight - scrollHeight - 150 + 'px';
+}
+}
+}
+show_wx_pic();
+_attachEvent(window, 'scroll', function () { show_wx_pic(); });
+//_attachEvent($('close_eew_wx'),'click',function(){display('eew_wx_show');setcookie('eew_wx_show_c','noshow');});
+</script>
+
+<div id="scrolltop" style="left: auto; right: 0px; visibility: visible;">
+<span><a href="http://bbs.eeworld.com.cn/forum.php?mod=post&amp;action=reply&amp;fid=126&amp;tid=475972&amp;extra=page%3D1&amp;page=1" onclick="showWindow(&#39;reply&#39;, this.href)" class="replyfast" title="快速回复"><b>快速回复</b></a></span>
+<span hidefocus="true"><a title="返回顶部" onclick="window.scrollTo(&#39;0&#39;,&#39;0&#39;)" class="scrolltopa"><b>返回顶部</b></a></span>
+<span>
+<a href="http://bbs.eeworld.com.cn/forum-126-1.html" hidefocus="true" class="returnlist" title="返回列表"><b>返回列表</b></a>
+</span>
+</div>
+<script type="text/javascript">_attachEvent(window, 'scroll', function () { showTopLink(); });checkBlind();</script>
+
+   </div>
+
+  <script type="text/javascript">(function(d,c){var a=d.createElement("script"),m=d.getElementsByTagName("script")[0],_eewProtocol="http://",eewurl=_eewProtocol+"counter.eeworld.com.cn/index.php/pv/count/";a.async=1;a.src=eewurl+c;m.parentNode.insertBefore(a,m)})(document,50)</script>
+
+  
+    
+    
+    	
+
+    	
+
+    		
+  
+   <script>document.write("<img src=http://counter.csdn.net/pv.aspx?id=103 border=0 width=0 height=0>");</script><img src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/pv.aspx" border="0" width="0" height="0"> 
+   
+      
+   
+      <script type="text/javascript">
+  (function($){
+     
+ $(function(){
+      
+  $(".relativepostz a").each(function(){
+     
+ $(this).attr('target','_blank');
+ 
+  });
+  
+  $(".relativepostz a").bind('click',function(){
+      
+  
+  var urlstr = $(this).attr('href');
+  
+  $.post('/huodong/hd20150722/click.php',{url:urlstr});
+  
+  });
+
+ 
+ });
+ 
+  })(jQuery)
+   </script>
+   
+<script type="text/javascript">
+
+(function() {
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+
+</script>
+   
+      
+  
+      <script src="http://www.eeworld.com.cn/advmanagez/bbs/javascript/ad_js/ad_counter_16.js?v=2" type="text/javascript"></script>
+      
+   
+<div style="display:none;">
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7a7934da33d555c9e26c68553a525afa";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a3fe776776ae6477620b1dd05d9286ce";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8558123-8']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</div> 
+
+ 
+   
+  
+
+ 
+
+<script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/js.php" type="text/javascript"></script>
+
+<script src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/ckads.php" type="text/javascript"></script>
+
+<iframe frameborder="no" scrolling="no" width="0" height="0" border="0" src="./F7 独轮机器人 MPU6050-DMP移植 - 【stm32_stm8】 - 电子工程世界-论坛_files/loginiframe.api.html"></iframe>			<div id="discuz_tips" style="display:none;"></div>
+			<script type="text/javascript">
+				var tipsinfo = '29598915|X3.3|0.6||0||0|7|1524497851|978344c7914dbda9ce05ba4f2b864589|2';
+			</script>
+			<script src="http://discuz.gtimg.cn/cloud/scripts/discuz_tips.js?v=1" type="text/javascript" charset="UTF-8"></script>
+</body></html>

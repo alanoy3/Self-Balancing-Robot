@@ -1,0 +1,102 @@
+
+
+.side {
+  float: left;
+  min-width: 210px;
+  margin: 0 10px 0 0;
+  background:#f5f5f5;
+}
+
+.user_head h1 {
+  color: #fff;
+  background: #000 url(../img/navbar.png) repeat-x;
+  margin: 0 0 10px 0;
+  padding: 0 10px;
+  font-size: 14px;
+  line-height: 33px;
+  height:41px;
+  width:210px;
+}
+
+.side .user_head dl {
+  display: block;
+  padding: 0 10px 0 20px;
+}
+
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+.clearfix{*+height:1%;}
+
+.side .user_head dl dt {
+  float: left;
+  width: 80px;
+  margin: 0 15px 0 0;
+  position: relative;
+}
+.side .user_head dl dd {
+  position: relative;
+  top: 32px;
+}
+.side .user_head .btn {
+  display: inline-block;
+  height: 18px;
+  line-height: 18px;
+  background: url(../img/btn.gif) repeat-x top;
+  color: #333;
+  padding: 0 15px;
+  border: solid 1px #ccc;
+  text-decoration: none;
+}
+
+.tree {
+  padding: 10px 0 0 5px;
+  font-size: 12px;
+}
+
+.side #search_input {
+  width: 160px;
+  height: 18px;
+  padding: 5px;
+  border: none;
+  color: #666;
+  font-size: 12px;
+  line-height: 20px;
+  margin: 10px;
+}
+
+h2.home {
+  background: transparent url(../img/home.png) no-repeat;
+}
+
+ul.top-links, h2.home {
+  font-size: 12px;
+  padding-left: 25px;
+}
+
+.top-links li, h2.home {
+
+  font-weight: bold;
+}
+
+#menu {
+  padding: 0;
+}
+
+.hidden_side, .show_side {
+  display: inline-block;
+  position: fixed;
+  top: 45%;
+  z-index: 289;
+  width: 15px;
+  height: 126px;
+  cursor: pointer; 
+}
+
+.hidden_side {
+  background: url(../img/hide.png) no-repeat;
+  left: 184px;
+}
+
+.show_side {
+  background: url(../img/show.png) no-repeat;
+  left: 0;
+}

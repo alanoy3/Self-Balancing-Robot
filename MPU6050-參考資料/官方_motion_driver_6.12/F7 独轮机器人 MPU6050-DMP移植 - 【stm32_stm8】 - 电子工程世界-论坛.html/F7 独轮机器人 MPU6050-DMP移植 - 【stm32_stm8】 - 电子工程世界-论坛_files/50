@@ -1,0 +1,102 @@
+var eeworld_tj = new function(){
+	var LO = location,D = document,SC = screen,W = window,DT = new Date(),M   = Math;DTL = D.title;
+    var __sid,L;
+    L = "https:" == D.location.protocol ? "https:": "http:";
+    var  Aa = function(){
+        this.h  =  LO.hostname;
+        this.rh = function(){
+            var d_a = this.h.split(".");
+            var rh;
+            if(d_a.length>2){
+                rh = d_a[d_a.length-2]+'.'+d_a[d_a.length-1]
+                if(rh=='com.cn'){
+                    rh =  d_a[d_a.length-3]+'.'+d_a[d_a.length-2]+'.'+d_a[d_a.length-1]
+                }    
+            }else{
+                rh = this.h;
+            }
+            return  rh;
+        }
+    }
+    var aa= new Aa();
+    var Ba = function(){
+        this.width  = SC.width;
+        this.height = SC.height;
+    }
+    var Ca = function(){
+        this.agent = encodeURI(W.navigator.userAgent);
+        this.refer = encodeURI(D.referrer);
+        this.url = encodeURI(D.URL);
+		this.ck = W.navigator.cookieEnabled;
+        this.title = D.title;
+        this.cookie = D.cookie;
+		this.snSize = screen.availWidth+'*'+screen.availHeight;
+		this.htmlSize = parseInt(D.body.clientWidth)+'*'+parseInt(D.body.clientHeight);
+		this.is_top = window.top!=window.self;
+    }
+    var Da = function(){
+        this.time = DT.getTime();
+    }
+    var da = new Da();
+    var ba = new Ba();
+    var ca = new Ca();
+    __sid =da.time.toString()+M.round(M.random()*256984).toString();
+    var Ea = function(){
+        this.gce = function(c_name){
+            if(D.cookie.length>0){
+                c_start = D.cookie.indexOf(c_name + "=");
+                if(c_start!=-1){
+                    c_start = c_start + c_name.length +1 ;
+                    c_end = D.cookie.indexOf(';',c_start);
+                    if(c_end==-1)c_end = D.cookie.length;
+                    return unescape(D.cookie.substring(c_start,c_end));
+                }
+            }
+            return '';
+        }
+        this.sce = function(c_name,value,exp){
+            DT.setDate(DT.getDate()+exp);
+            D.cookie = c_name+ "=" +escape(value)+((exp==null)?"":";expires="+DT.toGMTString())+";path=/;domain="+aa.rh();
+        }
+        this.cce = function(){
+            if(this.gce('__fansid')==""){
+                this.sce('__fansid',__sid,365*10);
+            }else{
+                __sid=this.gce("__fansid");
+            }
+            this.sce("__fanvt",DT.getTime());
+        }
+        this.gt = (this.gce('__fanvt'))?DT.getTime()-this.gce('__fanvt'):0;
+    }
+    var ea = new Ea();
+    ea.cce();
+	var uid = ea.gce('eew_uid');
+    function Fa(){
+        var im = new Image();
+        var a=[];
+		a.push('id=50');
+        a.push('s='+aa.h);
+        a.push('sid='+__sid);
+        a.push('at='+ca.agent);
+		a.push('hs='+ca.htmlSize);
+		a.push('ss='+ca.snSize);
+		a.push('ck='+ca.ck);
+        a.push('w='+ba.width);
+        a.push('h='+ba.height);
+        a.push('re='+ca.refer);
+		a.push('istop='+ca.is_top);
+		a.push('uid='+uid);
+        a.push('url='+ca.url);
+        a.push('t='+ea.gt);
+        if(aa.h=='bbs.eeworld.com.cn'&&typeof(fid)!='undefined'){
+            a.push('fid='+fid);
+        }
+        this.src = L+'//counter.eeworld.com.cn/tj.gif?'+a.join('&');
+        im.src = this.src;
+    }
+	
+    Fa(); 
+
+};
+
+
