@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Android Bluetooth Remote Control Car</string>
+
+    <string-array name="song_name">
+        <item>Song off</item>
+        <item>Song 1</item>
+        <item>Song 2</item>
+        <item>Song 3</item>
+        <item>Song 4</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id = "@+id/bt_discovery"
+        android:title="Discoverable"
+        android:icon="@drawable/enable_icon"
+        android:showAsAction="always"/>
+
+    <item
+        android:id = "@+id/bt_search"
+        android:title="Search"
+        android:showAsAction="always"/>
+
+    <item
+        android:id = "@+id/car_buttonMode"
+        android:title="Car Button Mode"/>
+
+    <item
+        android:id = "@+id/car_sensorMode"
+        android:title="Car Sensor Mode"/>
+
+    <item
+        android:id = "@+id/control_mode"
+        android:title="Control Mode"/>
+
+
+</menu>

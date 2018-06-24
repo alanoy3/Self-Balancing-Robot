@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.yvtc.androidbluetoothremotecontrolcar">
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <!-- 讓程式有權限連接裝置、傳輸資料。 -->
+
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- 讓程式有權限搜尋裝置及設定藍芽。 -->
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!--取得大約位置-->
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!--取得精確位置-->
+
+
+   <!---硬體加速開啟    android:hardwareAccelerated="true"   -->
+
+    <application
+        android:hardwareAccelerated="true"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            </activity>
+            <activity android:name=".car_in_button_mode" />
+            <activity android:name=".car_in_sensor_mode"
+                      android:hardwareAccelerated="true"/>
+            <activity android:name=".control_mode">
+        </activity>
+    </application>
+
+</manifest>

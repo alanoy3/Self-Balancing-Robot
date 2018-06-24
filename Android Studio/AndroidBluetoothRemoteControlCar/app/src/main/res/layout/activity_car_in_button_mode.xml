@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".car_in_button_mode">
+
+    <LinearLayout
+        android:id="@+id/linearLayout_button"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView_bluetooth_name_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="24sp" />
+
+        <ImageView
+            android:id="@+id/imageView_bluetooth_link_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_bluetooth_disabled_white_48dp" />
+
+        <Switch
+            android:id="@+id/switch_bluetooth_link_button"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:switchMinWidth="30dp" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton_up"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_keyboard_arrow_up_white_48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_button" />
+
+    <ImageButton
+        android:id="@+id/imageButton_left"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_keyboard_arrow_left_white_48dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton_up"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_up" />
+
+    <ImageButton
+        android:id="@+id/imageButton_right"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_keyboard_arrow_right_white_48dp"
+        app:layout_constraintStart_toEndOf="@+id/imageButton_up"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_up" />
+
+    <ImageButton
+        android:id="@+id/imageButton_down"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="116dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_keyboard_arrow_down_white_48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_up" />
+
+</android.support.constraint.ConstraintLayout>

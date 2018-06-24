@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_search"
+        android:title="Search"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_discoverable"
+        app:showAsAction="always"
+        android:title="Discoverable" />
+    <item
+        android:id="@+id/menu_mode"
+        app:showAsAction="always"
+        android:title="Mode">
+        <menu>
+            <item
+                android:id="@+id/menu_mode_car_button_mode"
+                android:title="Car Button Mode" />
+            <item
+                android:id="@+id/menu_mode_car_sensor_mode"
+                android:title="Car Sensor Mode" />
+            <item
+                android:id="@+id/menu_mode_control_mode"
+                android:title="Control Mode" />
+        </menu>
+    </item>
+
+
+</menu>
