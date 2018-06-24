@@ -1,0 +1,12 @@
+self-balancing-robot\storage_manager.o: ..\Src\MPU6050\mllite\storage_manager.c
+self-balancing-robot\storage_manager.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+self-balancing-robot\storage_manager.o: ..\Src\MPU6050\mllite\storage_manager.h
+self-balancing-robot\storage_manager.o: ..\Src\MPU6050\driver\include\mltypes.h
+self-balancing-robot\storage_manager.o: ..\Src\MPU6050\driver\include\stdint_invensense.h
+self-balancing-robot\storage_manager.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+self-balancing-robot\storage_manager.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\errno.h
+self-balancing-robot\storage_manager.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\limits.h
+self-balancing-robot\storage_manager.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+self-balancing-robot\storage_manager.o: ..\Src\MPU6050\mllite\ml_math_func.h
+self-balancing-robot\storage_manager.o: ..\Src\MPU6050\driver\include\mlmath.h
+self-balancing-robot\storage_manager.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
