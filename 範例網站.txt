@@ -1,0 +1,24 @@
+
+MPU6050
+How to Enable MPU6050 Orientation from DMP on STM32F4：
+http://iamjustinwang.blogspot.tw/2016/01/how-to-enable-mpu6050-orientation-form.html
+使用 MPU-6050 的 DMP 來取得更精準的運動感測資料 ：
+ https://blog.gtwang.org/iot/raspberry-pi-mpu-6050-read-data-using-dmp/
+
+
+STM32
+STM32 HAL庫學習系列第5篇定時器TIM---編碼器接口模式配置：
+https://blog.csdn.net/super828/article/details/79599963
+http://www.eemaker.com/stm32uartdmazhuanfa.html
+https://blog.csdn.net/ouening/article/details/79252770
+https://blog.csdn.net/youmeichifan/article/details/51750435
+https://blog.csdn.net/qq_37147721/article/details/79279046
+https://www.cnblogs.com/Mysterious/p/4804188.html
+
+
+OPENCV
+https://community.dur.ac.uk/m.j.r.bordewich/rpi/BrickPiRobot.html
+
+Self-Balancing-Robot
+http://duinopeak.com/wiki/index.php?title=%E9%A6%96%E9%A1%B5
+https://github.com/ClayFlannigan/Balanbot
