@@ -252,7 +252,6 @@ public class car_in_button_mode extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {     //建立最右邊的按鈕，為OK
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mChatService.stop();        //  停止藍芽傳輸
                 finish();              //關閉這個Activity
                 dialog.dismiss();       //關閉對話框
             }
