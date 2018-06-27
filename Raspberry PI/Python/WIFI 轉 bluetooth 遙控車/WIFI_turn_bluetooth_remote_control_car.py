@@ -91,20 +91,26 @@ if __name__ == "__main__":
         client, addr = WIFI_socket_init.server.accept()
         print ( "[*] Acepted connection from: %s:%d" % (addr[0],addr[1]) )
 
-        
+        temp = ""
 
         while True:
 
             # WIFI socket 接收資料，設定一筆資料最大為 1 byte
             request = client.recv(1)
             request=request.decode()    # 二進制編碼轉換成一般字碼
-            print ( "[*] Received:" , request )
-                    
+            
+
             # WIFI socket 回傳資料給客戶端
             msg ='ACK!' + "\r\n" 
             client.send( msg.encode('utf-8') )  # 回傳字碼轉換，並輸出
 
-            client_sock.send( str(request) )	   # WIFI 轉 藍芽輸出
+            if str(request) != str(temp) :
+
+                temp = request
+
+                print ("request=" , request)
+                
+                client_sock.send( str(request) )	   # WIFI 轉 藍芽輸出
 
 
     except KeyboardInterrupt:
