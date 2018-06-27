@@ -25,7 +25,7 @@ uint8_t Car_switch = 0;
 #define ZHONGZHI 1.4;       // 1.4
         //平衡
 double  Balance_Kp=3000,       //3000
-        Balance_Kd=6,       //5
+        Balance_Kd=5,       //5
         //編碼器速度
         Velocity_Kp=200,       //20
         Velocity_Ki=1,        //0.8
@@ -165,6 +165,7 @@ void Set_Pwm(int motor_L,int motor_R)
     
     
 //-----------------------------車輪同步誤差處理--------------------------------------
+    
     int ABS_Encoder_Left = abs(Encoder_Left),
         ABS_Encoder_Right = abs(Encoder_Right);
     
@@ -180,6 +181,7 @@ void Set_Pwm(int motor_L,int motor_R)
     if(motor_L > 0) motor_L =  motor_L - error_motor_L;	
 	if(motor_R < 0) motor_R =  motor_R + error_motor_R;	
 	if(motor_R > 0) motor_R =  motor_R - error_motor_R;
+    
 
 
 	

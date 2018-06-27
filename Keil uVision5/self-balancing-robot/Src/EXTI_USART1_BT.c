@@ -1,8 +1,8 @@
 #include "stm32f0xx_hal.h"
 #include "stm32f0xx.h"
 
-#define Target_Velocity 50;											//前進、後退速度
-#define Turn_Velocity 	 30;											//轉向速度
+#define Target_Velocity 100;											//前進、後退速度
+#define Turn_Velocity 	 40;											//轉向速度
 extern uint8_t aRxBuffer1[1];											//藍芽接收的資料變數，從 self-balancing-robot_main_Init.c 來
 volatile double Movement=0,												//前進、後退 變數
 							 Turn_Amplitude=0;									//轉向 變數
